@@ -1,0 +1,8 @@
+<Project>
+
+  <PropertyGroup>
+    <FullTargets>True</FullTargets>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+</Project>
