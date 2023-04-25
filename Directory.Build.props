@@ -1,8 +1,13 @@
 <Project>
 
   <PropertyGroup>
+    <Authors>wherewhere</Authors>
+    <Copyright>Copyright © 2014 - 2023 SharpADB. All rights reserved.</Copyright>
     <FullTargets>True</FullTargets>
     <LangVersion>latest</LangVersion>
+    <PackageProjectUrl>https://github.com/yungd1plomat/AdvancedSharpAdbClient</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/yungd1plomat/AdvancedSharpAdbClient</RepositoryUrl>
+    <VersionPrefix>0.0.1</VersionPrefix>
   </PropertyGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using AdvancedSharpAdbClient;
 using ProcessForUWP.UWP.Helpers;
 using SharpADB.Helpers;
+using SharpADB.Pages;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -89,7 +90,7 @@ namespace SharpADB
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
 
-                //ThemeHelper.Initialize();
+                ThemeHelper.Initialize();
             }
 
             if (e is LaunchActivatedEventArgs args)
@@ -165,7 +166,7 @@ namespace SharpADB
 
         private void Application_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-            //SettingsHelper.LogManager.GetLogger("Unhandled Exception - Application").Error(e.Exception.ExceptionToMessage(), e.Exception);
+            SettingsHelper.LogManager.GetLogger("Unhandled Exception - Application").Error(e.Exception.ExceptionToMessage(), e.Exception);
             e.Handled = true;
         }
 
@@ -173,7 +174,7 @@ namespace SharpADB
         {
             if (e.ExceptionObject is Exception Exception)
             {
-                //SettingsHelper.LogManager.GetLogger("Unhandled Exception - CurrentDomain").Error(Exception.ExceptionToMessage(), Exception);
+                SettingsHelper.LogManager.GetLogger("Unhandled Exception - CurrentDomain").Error(Exception.ExceptionToMessage(), Exception);
             }
         }
 
@@ -189,7 +190,7 @@ namespace SharpADB
 
         private void SynchronizationContext_UnhandledException(object sender, Helpers.UnhandledExceptionEventArgs e)
         {
-            //SettingsHelper.LogManager.GetLogger("Unhandled Exception - SynchronizationContext").Error(e.Exception.ExceptionToMessage(), e.Exception);
+            SettingsHelper.LogManager.GetLogger("Unhandled Exception - SynchronizationContext").Error(e.Exception.ExceptionToMessage(), e.Exception);
             e.Handled = true;
         }
 

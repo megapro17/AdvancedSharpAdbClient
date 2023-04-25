@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:controls="using:SharpADB.Controls">
+    <Style TargetType="controls:SharpADBLogo">
+        <Setter Property="CornerRadius" Value="{ThemeResource OverlayCornerRadius}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:SharpADBLogo">
+                    <Grid
+                        Width="64"
+                        Height="64"
+                        Background="{ThemeResource ButtonBackground}"
+                        BackgroundSizing="InnerBorderEdge"
+                        BorderBrush="{ThemeResource AccentButtonBorderBrush}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        RequestedTheme="Dark">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="7*" />
+                            <RowDefinition Height="3*" />
+                        </Grid.RowDefinitions>
+                        <Path
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M30.6694 17.9252C30.2058 17.9248 29.7611 17.7377 29.433 17.4049C29.1048 17.0721 28.9198 16.6208 28.9186 16.1497C28.9186 15.1684 29.7019 14.3737 30.6694 14.3737C31.1333 14.374 31.5781 14.5611 31.9063 14.894C32.2345 15.2269 32.4193 15.6785 32.4203 16.1497C32.4203 17.1311 31.6318 17.9252 30.6694 17.9252ZM11.3358 17.9252C10.8721 17.9248 10.4275 17.7377 10.0993 17.4049C9.77114 17.0721 9.58617 16.6208 9.58492 16.1497C9.58492 15.1684 10.3687 14.3737 11.3358 14.3737C11.7996 14.374 12.2444 14.5611 12.5726 14.894C12.9008 15.2269 13.0857 15.6785 13.0867 16.1497C13.0867 17.1311 12.3034 17.9257 11.3363 17.9257L11.3358 17.9252ZM31.2952 7.24392L34.7917 1.10566C34.9918 0.753652 34.8705 0.30031 34.524 0.097639C34.3566 0.00050204 34.1581 -0.0254143 33.9719 0.0255438C33.7857 0.076502 33.6269 0.200198 33.5302 0.369645L29.9917 6.58844C27.2837 5.33508 24.2445 4.6364 21.0005 4.6364C17.756 4.6364 14.7173 5.33508 12.0094 6.58844L8.47087 0.369645C8.37413 0.200198 8.21533 0.076502 8.02915 0.0255438C7.84296 -0.0254143 7.6445 0.00050204 7.47705 0.097639C7.31026 0.195519 7.18843 0.356549 7.13825 0.545474C7.08807 0.7344 7.11362 0.935827 7.2093 1.10566L10.7058 7.24445C4.70033 10.5549 0.5985 16.7199 0 24H42C41.4004 16.715 37.2997 10.5507 31.2952 7.24392Z"
+                            Fill="#3DDC84" />
+                        <Border
+                            Grid.Row="1"
+                            Background="#682A7B"
+                            CornerRadius="{Binding Source={TemplateBinding CornerRadius}, Converter={StaticResource BottomCornerRadiusFilterConverter}}">
+                            <TextBlock
+                                Margin="0,0,0,2"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="10"
+                                Text="SharpADB" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
