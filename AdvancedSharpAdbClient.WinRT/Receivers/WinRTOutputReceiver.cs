@@ -1,5 +1,6 @@
-﻿using System.Runtime.InteropServices;
-using System;
+﻿// <copyright file="WinRTOutputReceiver.cs" company="The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere">
+// Copyright (c) The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere. All rights reserved.
+// </copyright>
 
 namespace AdvancedSharpAdbClient.WinRT
 {

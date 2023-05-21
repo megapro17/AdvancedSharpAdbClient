@@ -1,12 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Platforms>x64;x86;ARM64</Platforms>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(FullTargets)' == 'true'">
     <NoWarn>NU1603</NoWarn>
-    <TargetFrameworks>native;net6.0-windows10.0.18362.0</TargetFrameworks>
+    <TargetFrameworks>uap10.0;uap10.0.15138.0;net6.0-windows10.0.18362.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(FullTargets)' != 'true'">
@@ -16,6 +12,12 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows10.0.18362.0'">
     <CsWinRTComponent>true</CsWinRTComponent>
     <CsWinRTWindowsMetadata>10.0.19041.0</CsWinRTWindowsMetadata>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' != 'net6.0-windows10.0.18362.0'">
+    <DebugType>Full</DebugType>
+    <OutputType>winmdobj</OutputType>
+    <Platforms>x64;x86;ARM64;ARM</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

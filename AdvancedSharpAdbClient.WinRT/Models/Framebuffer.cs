@@ -5,6 +5,7 @@
 using AdvancedSharpAdbClient.WinRT.Extensions;
 using System;
 using Windows.Foundation;
+using TimeSpan = System.TimeSpan;
 
 namespace AdvancedSharpAdbClient.WinRT
 {
@@ -33,13 +34,13 @@ namespace AdvancedSharpAdbClient.WinRT
 
         /// <summary>
         /// Gets the framebuffer header. The header contains information such as the width and height and the color encoding.
-        /// This property is set after you call <see cref="RefreshAsync(System.TimeSpan)"/>.
+        /// This property is set after you call <see cref="RefreshAsync(TimeSpan)"/>.
         /// </summary>
         public FramebufferHeader Header => FramebufferHeader.GetFramebufferHeader(framebuffer.Header);
 
         /// <summary>
         /// Gets the framebuffer data. You need to parse the <see cref="FramebufferHeader"/> to interpret this data (such as the color encoding).
-        /// This property is set after you call <see cref="RefreshAsync(System.TimeSpan)"/>.
+        /// This property is set after you call <see cref="RefreshAsync(TimeSpan)"/>.
         /// </summary>
         public byte[] Data => framebuffer.Data;
 
@@ -54,7 +55,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// Asynchronously refreshes the framebuffer: fetches the latest framebuffer data from the device. Access the <see cref="Header"/>
         /// and <see cref="Data"/> properties to get the updated framebuffer data.
         /// </summary>
-        /// <param name="timeout">A <see cref="Windows.Foundation.TimeSpan"/> which can be used to cancel the asynchronous task.</param>
+        /// <param name="timeout">A <see cref="TimeSpan"/> which can be used to cancel the asynchronous task.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
         public IAsyncAction RefreshAsync(TimeSpan timeout) => framebuffer.RefreshAsync(timeout.GetCancellationToken()).AsAsyncAction();
 

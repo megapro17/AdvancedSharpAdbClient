@@ -22,19 +22,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <UseWinRT Condition="'$(IsWindows)' == ''">False</UseWinRT>
     <FullTargets Condition="'$(FullTargets)' == ''">True</FullTargets>
     <IsWindows Condition="'$(IsWindows)' == ''">False</IsWindows>
     <IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows')) == 'true' OR '$(Platform)' == 'Windows NT'">True</IsWindows>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'native'">
-    <DebugType>Full</DebugType>
-    <DefineConstants>$(DefineConstants);WINDOWS_UWP;WINRT</DefineConstants>
-    <NuGetTargetMoniker Condition="'$(DesignTimeBuild)' == 'true'">native</NuGetTargetMoniker>
-    <NuGetTargetMoniker Condition="'$(DesignTimeBuild)' != 'true'">UAP,Version=v10.0</NuGetTargetMoniker>
-    <OutputType>winmdobj</OutputType>
-    <PackageTargetFallback>uap10.0</PackageTargetFallback>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcore50'">
@@ -46,15 +37,20 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0'">
-    <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
-    <NugetTargetMoniker>UAP,Version=v10.0</NugetTargetMoniker>
+    <TargetPlatformMinVersion>10.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0.15138.0'">
     <TargetPlatformMinVersion>10.0.15138.0</TargetPlatformMinVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'native' or '$(TargetFramework)' == 'uap10.0'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0'
+                         or '$(TargetFramework)' == 'uap10.0.15138.0'">
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <DefaultLanguage>en-US</DefaultLanguage>
+    <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
     <LanguageTargets>$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets</LanguageTargets>
+    <NugetTargetMoniker>UAP,Version=v10.0</NugetTargetMoniker>
     <TargetFrameworkIdentifier>.NETCore</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>

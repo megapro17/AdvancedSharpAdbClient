@@ -1,12 +1,5 @@
 ﻿using AdvancedSharpAdbClient.Exceptions;
 using AdvancedSharpAdbClient.WinRT.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 
 namespace AdvancedSharpAdbClient.WinRT
@@ -36,10 +29,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Initializes a new instance of the <see cref="AdbServer"/> class.
         /// </summary>
-        public AdbServer()
-        {
-            adbServer = new(new AdvancedSharpAdbClient.AdbClient(), Factories.AdbCommandLineClientFactory);
-        }
+        public AdbServer() => adbServer = new();
 
         /// <summary>
         /// Gets or sets the default instance of the <see cref="IAdbServer"/> interface.
@@ -62,19 +52,19 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <returns>
         /// <list type="ordered">
         /// <item>
-        ///     <see cref="StartServerResult.AlreadyRunning"/> if the adb server was already
-        ///     running and the version of the adb server was at least <see cref="AdbServer.RequiredAdbVersion"/>.
+        ///   <see cref="StartServerResult.AlreadyRunning"/> if the adb server was already
+        ///   running and the version of the adb server was at least <see cref="RequiredAdbVersion"/>.
         /// </item>
         /// <item>
-        ///     <see cref="StartServerResult.RestartedOutdatedDaemon"/> if the adb server
-        ///     was already running, but the version was less than <see cref="AdbServer.RequiredAdbVersion"/>
-        ///     or less than the version of the adb client at <paramref name="adbPath"/> and the
-        ///     <paramref name="restartServerIfNewer"/> flag was set.
+        ///   <see cref="StartServerResult.RestartedOutdatedDaemon"/> if the adb server
+        ///   was already running, but the version was less than <see cref="RequiredAdbVersion"/>
+        ///   or less than the version of the adb client at <paramref name="adbPath"/> and the
+        ///   <paramref name="restartServerIfNewer"/> flag was set.
         /// </item>
         /// <item>
         /// </item>
-        ///     <see cref="StartServerResult.Started"/> if the adb server was not running,
-        ///     and the server was started.
+        ///   <see cref="StartServerResult.Started"/> if the adb server was not running,
+        ///   and the server was started.
         /// </list>
         /// </returns>
         /// <exception cref="AdbException">

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Xml.Linq;
 using Windows.ApplicationModel;
 
 namespace AdvancedSharpAdbClient.WinRT.Extensions

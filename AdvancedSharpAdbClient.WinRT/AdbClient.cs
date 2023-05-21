@@ -9,11 +9,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Storage.Streams;
+using TimeSpan = System.TimeSpan;
 
 namespace AdvancedSharpAdbClient.WinRT
 {
@@ -27,7 +29,7 @@ namespace AdvancedSharpAdbClient.WinRT
     /// call the <see cref="GetDevices"/> method.
     /// </para>
     /// <para>
-    /// To run a command on a device, you can use the <see cref="ExecuteRemoteCommandAsync(string, DeviceData, IShellOutputReceiver, CancellationToken)"/>
+    /// To run a command on a device, you can use the <see cref="ExecuteRemoteCommandAsync(string, DeviceData, IShellOutputReceiver, TimeSpan)"/>
     /// method.
     /// </para>
     /// </summary>
@@ -51,10 +53,14 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Initializes a new instance of the <see cref="AdbClient"/> class.
         /// </summary>
-        public AdbClient()
-        {
-            adbClient = new(new IPEndPoint(IPAddress.Loopback, AdbServerPort), Factories.AdbSocketFactory);
-        }
+        public AdbClient() => adbClient = new();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdbClient"/> class.
+        /// </summary>
+        /// <param name="address">The host name or a string representation of the IP address.</param>
+        /// <param name="port">The port number associated with the address, or 0 to specify any available port. port is in host order.</param>
+        public AdbClient(string address, int port) => adbClient = new(new DnsEndPoint(address, port), Factories.AdbSocketFactory);
 
         /// <summary>
         /// Create an ASCII string preceded by four hex digits. The opening "####"
@@ -88,7 +94,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Ask the ADB server for its internal version number.
         /// </summary>
-        /// <param name="timeout">A <see cref="System.TimeSpan"/> which can be used to cancel the asynchronous operation.</param>
+        /// <param name="timeout">A <see cref="TimeSpan"/> which can be used to cancel the asynchronous operation.</param>
         /// <returns>An <see cref="IAsyncOperation{TResult}"/> which return the ADB version number.</returns>
         public IAsyncOperation<int> GetAdbVersionAsync(TimeSpan timeout) => adbClient.GetAdbVersionAsync(timeout.GetCancellationToken()).AsAsyncOperation();
 
@@ -112,7 +118,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// ADB client detects that an obsolete server is running after an
         /// upgrade.
         /// </summary>
-        /// <param name="timeout">A <see cref="System.TimeSpan"/> which can be used to cancel the asynchronous operation.</param>
+        /// <param name="timeout">A <see cref="TimeSpan"/> which can be used to cancel the asynchronous operation.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
         public IAsyncAction KillAdbAsync(TimeSpan timeout) => adbClient.KillAdbAsync(timeout.GetCancellationToken()).AsAsyncAction();
 
@@ -144,7 +150,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Gets the devices that are available for communication.
         /// </summary>
-        /// <param name="timeout">A <see cref="System.TimeSpan"/> which can be used to cancel the asynchronous operation.</param>
+        /// <param name="timeout">A <see cref="TimeSpan"/> which can be used to cancel the asynchronous operation.</param>
         /// <returns>An <see cref="IAsyncOperation{TResult}"/> which return the list of devices that are connected.</returns>
         public IAsyncOperation<IEnumerable<DeviceData>> GetDevicesAsync(TimeSpan timeout) => Task.Run(async () => (await adbClient.GetDevicesAsync(timeout.GetCancellationToken())).Select(DeviceData.GetDeviceData)).AsAsyncOperation();
 
@@ -316,6 +322,25 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <param name="device">The device on which to run the command.</param>
         /// <param name="receiver">The receiver which will get the command output.</param>
         public void ExecuteRemoteCommand(string command, DeviceData device, IShellOutputReceiver receiver) => adbClient.ExecuteRemoteCommand(command, device.deviceData, WinRTOutputReceiver.GetShellOutputReceiver(receiver));
+
+        /// <summary>
+        /// Executes a command on the device.
+        /// </summary>
+        /// <param name="command">The command to execute.</param>
+        /// <param name="device">The device on which to run the command.</param>
+        /// <param name="receiver">The receiver which will get the command output.</param>
+        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
+        public IAsyncAction ExecuteRemoteCommandAsync(string command, DeviceData device, IShellOutputReceiver receiver) => adbClient.ExecuteRemoteCommandAsync(command, device.deviceData, WinRTOutputReceiver.GetShellOutputReceiver(receiver)).AsAsyncAction();
+
+        /// <summary>
+        /// Executes a command on the device.
+        /// </summary>
+        /// <param name="command">The command to execute.</param>
+        /// <param name="device">The device on which to run the command.</param>
+        /// <param name="receiver">The receiver which will get the command output.</param>
+        /// <param name="timeout">A <see cref="TimeSpan"/> which can be used to cancel the asynchronous operation.</param>
+        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
+        public IAsyncAction ExecuteRemoteCommandAsync(string command, DeviceData device, IShellOutputReceiver receiver, TimeSpan timeout) => adbClient.ExecuteRemoteCommandAsync(command, device.deviceData, WinRTOutputReceiver.GetShellOutputReceiver(receiver), timeout.GetCancellationToken()).AsAsyncAction();
 
         /// <summary>
         /// Gets a <see cref="Framebuffer"/> which contains the framebuffer data for this device. The framebuffer data can be refreshed,
@@ -606,5 +631,18 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         /// <param name="device"></param>
         public void HomeBtn(DeviceData device) => adbClient.HomeBtn(device.deviceData);
+
+        /// <summary>
+        /// Sets default encoding (default - UTF8)
+        /// </summary>
+        /// <param name="codepage">The code page identifier of the preferred encoding.</param>
+        [DefaultOverload]
+        public static void SetEncoding(int codepage) => AdvancedSharpAdbClient.AdbClient.SetEncoding(Encoding.GetEncoding(codepage));
+
+        /// <summary>
+        /// Sets default encoding (default - UTF8)
+        /// </summary>
+        /// <param name="name">The code page name of the preferred encoding.</param>
+        public static void SetEncoding(string name) => AdvancedSharpAdbClient.AdbClient.SetEncoding(Encoding.GetEncoding(name));
     }
 }

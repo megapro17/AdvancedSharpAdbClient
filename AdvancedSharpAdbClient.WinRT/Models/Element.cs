@@ -5,7 +5,6 @@
 using AdvancedSharpAdbClient.WinRT.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Windows.Foundation;
 
 namespace AdvancedSharpAdbClient.WinRT
@@ -22,7 +21,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         public Cords Cords
         {
-            get => Cords.GetCords( element.Cords);
+            get => Cords.GetCords(element.Cords);
             set => element.Cords = value.cords;
         }
 

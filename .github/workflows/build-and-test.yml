@@ -11,6 +11,9 @@ jobs:
     name: build-and-test
     runs-on: windows-latest
 
+    env:
+      Solution_Name: AdvancedSharpAdbClient.WinRT\AdvancedSharpAdbClient.WinRT.csproj
+
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET Core
@@ -18,8 +21,13 @@ jobs:
       with:
         dotnet-version: ${{env.DOTNET_VERSION}}
 
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1
+      with:
+        msbuild-architecture: x64
+
     - name: Install dependencies
-      run: dotnet restore -p:FullTargets=false
+      run: msbuild $env:Solution_Name /t:Restore
       
     - name: Build
-      run: dotnet build --no-restore -p:FullTargets=false、
+      run: msbuild $env:Solution_Name
