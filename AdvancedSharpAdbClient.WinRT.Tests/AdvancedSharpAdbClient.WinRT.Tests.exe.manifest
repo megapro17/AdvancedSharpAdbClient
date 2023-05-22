@@ -10,5 +10,9 @@
       name="AdvancedSharpAdbClient.WinRT.AdbServer"
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+      name="AdvancedSharpAdbClient.WinRT.DeviceCommands.PackageManager"
+      threadingModel="both"
+      xmlns="urn:schemas-microsoft-com:winrt.v1" />
   </file>
 </assembly>

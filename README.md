@@ -16,15 +16,15 @@ It's a WinRT package of [AdvancedSharpAdbClient](https://github.com/yungd1plomat
 - .NET 6.0 - Windows 10.0.18362.0
 
 ## Installation
-To install AdvancedSharpAdbClient.WinRT install the [AdvancedSharpAdbClient.WinRT NuGetPackage](https://www.nuget.org/packages/AdvancedSharpAdbClient.WinRT). If you're
-using Visual Studio, you can run the following command in the [Package Manager Console](http://docs.nuget.org/consume/package-manager-console):
+To install AdvancedSharpAdbClient.WinRT install the [AdvancedSharpAdbClient.WinRT NuGetPackage](https://www.nuget.org/packages/AdvancedSharpAdbClient.WinRT).
+If you're using Visual Studio, you can run the following command in the [Package Manager Console](http://docs.nuget.org/consume/package-manager-console):
 
 ```ps
 PM> Install-Package AdvancedSharpAdbClient.WinRT
 ```
 
 ## Getting Started
-AdvancedSharpAdbClient.WinRT does not communicate directly with your Android devices, but uses the `adb.exe` server process as an intermediate. Before you can connect to your Android device, you must first start the `adb.exe` server.
+AdvancedSharpAdbClient does not communicate directly with your Android devices, but uses the `adb.exe` server process as an intermediate. Before you can connect to your Android device, you must first start the `adb.exe` server.
 
 You can do so by either running `adb.exe` yourself (it comes as a part of the ADK, the Android Development Kit), or you can use the `AdbServer.StartServer` method like this:
 
@@ -327,7 +327,7 @@ int main()
     ...
     PackageManager manager = PackageManager::PackageManager(client, device);
     manager.InstallMultiplePackage(L"C:\\Users\\me\\Documents\\base.apk", { L"C:\\Users\\me\\Documents\\split_1.apk", L"C:\\Users\\me\\Documents\\split_2.apk" }, false); // Install split app whith base app
-    manager.InstallMultiplePackage({ L"C:\\Users\\me\\Documents\\split_3.apk", @"C:\\Users\\me\\Documents\\split_4.apk" }, L"com.android.app", false); // Add split app to base app which packagename is 'com.android.app'
+    manager.InstallMultiplePackage({ L"C:\\Users\\me\\Documents\\split_3.apk", L"C:\\Users\\me\\Documents\\split_4.apk" }, L"com.android.app", false); // Add split app to base app which packagename is 'com.android.app'
     ...
 }
 ```
@@ -399,7 +399,7 @@ void UploadFile()
     {
         using (Stream stream = File.OpenRead(@"C:\MyFile.txt"))
         {
-            service.Push(stream, "/data/local/tmp/MyFile.txt", 777 ,DateTimeOffset.Now, null ,CancellationToken.None);
+            service.Push(stream, "/data/local/tmp/MyFile.txt", 777, DateTimeOffset.Now, null, CancellationToken.None);
         }
     }
 }
