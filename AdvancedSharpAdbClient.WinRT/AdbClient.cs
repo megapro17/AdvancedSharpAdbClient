@@ -188,58 +188,35 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <inheritdoc/>
         public void Unroot(DeviceData device) => adbClient.Unroot(device.deviceData);
 
-        ///// <summary>
-        ///// Installs an Android application on an device.
-        ///// </summary>
-        ///// <param name="device">The device on which to install the application.</param>
-        ///// <param name="apk">A <see cref="IInputStream"/> which represents the application to install.</param>
-        //public void Install(DeviceData device, IInputStream apk) => adbClient.Install(device.deviceData, apk.AsStreamForRead());
+        /// <inheritdoc/>
+        public void Install(DeviceData device, IInputStream apk) => adbClient.Install(device.deviceData, apk.AsStreamForRead());
 
         /// <inheritdoc/>
         public void Install(DeviceData device, IInputStream apk, [ReadOnlyArray] params string[] arguments) => adbClient.Install(device.deviceData, apk.AsStreamForRead(), arguments);
 
-        ///// <summary>
-        ///// Push multiple APKs to the device and install them.
-        ///// </summary>
-        ///// <param name="device">The device on which to install the application.</param>
-        ///// <param name="splitAPKs"><see cref="IInputStream"/>s which represents the split APKs to install.</param>
-        ///// <param name="packageName">The packageName of the base APK to install.</param>
-        //public void InstallMultiple(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName) => adbClient.InstallMultiple(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()).ToArray(), packageName);
+        /// <inheritdoc/>
+        public void InstallMultiple(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName) => adbClient.InstallMultiple(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()).ToArray(), packageName);
 
         /// <inheritdoc/>
         public void InstallMultiple(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName, [ReadOnlyArray] params string[] arguments) => adbClient.InstallMultiple(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()).ToArray(), packageName, arguments);
 
-        ///// <summary>
-        ///// Push multiple APKs to the device and install them.
-        ///// </summary>
-        ///// <param name="device">The device on which to install the application.</param>
-        ///// <param name="baseAPK">A <see cref="IInputStream"/> which represents the base APK to install.</param>
-        ///// <param name="splitAPKs"><see cref="IInputStream"/>s which represents the split APKs to install.</param>
-        //[DefaultOverload]
-        //public void InstallMultiple(DeviceData device, IInputStream baseAPK, IEnumerable<IInputStream> splitAPKs) => adbClient.InstallMultiple(device.deviceData, baseAPK.AsStreamForRead(), splitAPKs.Select((x) => x.AsStreamForRead()).ToArray());
+        /// <inheritdoc/>
+        [DefaultOverload]
+        public void InstallMultiple(DeviceData device, IInputStream baseAPK, IEnumerable<IInputStream> splitAPKs) => adbClient.InstallMultiple(device.deviceData, baseAPK.AsStreamForRead(), splitAPKs.Select((x) => x.AsStreamForRead()).ToArray());
 
         /// <inheritdoc/>
         [DefaultOverload]
         public void InstallMultiple(DeviceData device, IInputStream baseAPK, IEnumerable<IInputStream> splitAPKs, [ReadOnlyArray] params string[] arguments) => adbClient.InstallMultiple(device.deviceData, baseAPK.AsStreamForRead(), splitAPKs.Select((x) => x.AsStreamForRead()).ToArray(), arguments);
 
-        ///// <summary>
-        ///// Like "install", but starts an install session.
-        ///// </summary>
-        ///// <param name="device">The device on which to install the application.</param>
-        ///// <returns>Session ID</returns>
-        //public string InstallCreate(DeviceData device) => adbClient.InstallCreate(device.deviceData);
+        /// <inheritdoc/>
+        public string InstallCreate(DeviceData device) => adbClient.InstallCreate(device.deviceData);
 
         /// <inheritdoc/>
         [DefaultOverload]
         public string InstallCreate(DeviceData device, [ReadOnlyArray] params string[] arguments) => adbClient.InstallCreate(device.deviceData, arguments: arguments);
 
-        ///// <summary>
-        ///// Like "install", but starts an install session.
-        ///// </summary>
-        ///// <param name="device">The device on which to install the application.</param>
-        ///// <param name="packageName">The packageName of the baseAPK to install.</param>
-        ///// <returns>Session ID</returns>
-        //public string InstallCreate(DeviceData device, string packageName) => adbClient.InstallCreate(device.deviceData, packageName);
+        /// <inheritdoc/>
+        public string InstallCreate(DeviceData device, string packageName) => adbClient.InstallCreate(device.deviceData, packageName);
 
         /// <inheritdoc/>
         public string InstallCreate(DeviceData device, string packageName, [ReadOnlyArray] params string[] arguments) => adbClient.InstallCreate(device.deviceData, packageName, arguments);
@@ -279,23 +256,13 @@ namespace AdvancedSharpAdbClient.WinRT
         public void Swipe(DeviceData device, int x1, int y1, int x2, int y2, long speed) => adbClient.Swipe(device.deviceData, x1, y1, x2, y2, speed);
 
         /// <inheritdoc/>
-        public bool IsCurrentApp(DeviceData device, string packageName)
-        {
-            ConsoleOutputReceiver receiver = new();
-            ExecuteRemoteCommand($"dumpsys activity activities | grep mResumedActivity", device, receiver);
-            string response = receiver.ToString().Trim();
-            return response.ToString().Contains(packageName);
-        }
+        public bool IsCurrentApp(DeviceData device, string packageName) => adbClient.IsCurrentApp(device.deviceData, packageName);
 
         /// <inheritdoc/>
-        public bool IsAppRunning(DeviceData device, string packageName)
-        {
-            ConsoleOutputReceiver receiver = new();
-            ExecuteRemoteCommand($"pidof {packageName}", device, receiver);
-            string response = receiver.ToString().Trim();
-            bool intParsed = int.TryParse(response, out int pid);
-            return intParsed && pid > 0;
-        }
+        public bool IsAppRunning(DeviceData device, string packageName) => adbClient.IsAppRunning(device.deviceData, packageName);
+
+        /// <inheritdoc/>
+        public AppStatus GetAppStatus(DeviceData device, string packageName)=> (AppStatus)adbClient.GetAppStatus(device.deviceData, packageName);
 
         /// <inheritdoc/>
         public Element FindElement(DeviceData device, string xpath) => Element.GetElement(adbClient.FindElement(device.deviceData, xpath));

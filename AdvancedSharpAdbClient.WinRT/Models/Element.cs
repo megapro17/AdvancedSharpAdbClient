@@ -56,30 +56,59 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Clicks on this coordinates.
         /// </summary>
+        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
         public IAsyncAction ClickAsync() => element.ClickAsync().AsAsyncAction();
 
         /// <summary>
         /// Clicks on this coordinates.
         /// </summary>
         /// <param name="timeout">A <see cref="System.TimeSpan"/> which can be used to cancel the asynchronous task.</param>
+        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
         public IAsyncAction ClickAsync(TimeSpan timeout) => element.ClickAsync(timeout.GetCancellationToken()).AsAsyncAction();
 
         /// <summary>
         /// Send text to device. Doesn't support Russian.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="text">The text to send.</param>
         public void SendText(string text) => element.SendText(text);
 
+        /// <summary>
+        /// Send text to device. Doesn't support Russian.
+        /// </summary>
+        /// <param name="text">The text to send.</param>
+        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
+        public IAsyncAction SendTextAsync(string text) => element.SendTextAsync(text).AsAsyncAction();
 
         /// <summary>
-        /// Clear the input text. The input should be in focus. Use el.ClearInput() if the element isn't focused.
+        /// Send text to device. Doesn't support Russian.
+        /// </summary>
+        /// <param name="text">The text to send.</param>
+        /// <param name="timeout">A <see cref="System.TimeSpan"/> which can be used to cancel the asynchronous task.</param>
+        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
+        public IAsyncAction SendTextAsync(string text, TimeSpan timeout) => element.SendTextAsync(text, timeout.GetCancellationToken()).AsAsyncAction();
+
+        /// <summary>
+        /// Clear the input text. Use <see cref="IAdbClient.ClearInput(DeviceData, int)"/> if the element is focused.
         /// </summary>
         public void ClearInput() => element.ClearInput();
 
         /// <summary>
-        /// Clear the input text. The input should be in focus. Use el.ClearInput() if the element isn't focused.
+        /// Clear the input text. Use <see cref="IAdbClient.ClearInputAsync(DeviceData, int)"/> if the element is focused.
         /// </summary>
-        /// <param name="charCount"></param>
+        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
+        public IAsyncAction ClearInputAsync() => element.ClearInputAsync().AsAsyncAction();
+
+        /// <summary>
+        /// Clear the input text. Use <see cref="IAdbClient.ClearInput(DeviceData, int)"/> if the element is focused.
+        /// </summary>
+        /// <param name="charCount">The length of text to clear.</param>
         public void ClearInput(int charCount) => element.ClearInput(charCount);
+
+        /// <summary>
+        /// Clear the input text. Use <see cref="IAdbClient.ClearInputAsync(DeviceData, int)"/> if the element is focused.
+        /// </summary>
+        /// <param name="charCount">The length of text to clear.</param>
+        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
+        public IAsyncAction ClearInputAsync(int charCount = 0) => element.ClearInputAsync(charCount).AsAsyncAction();
     }
 }
