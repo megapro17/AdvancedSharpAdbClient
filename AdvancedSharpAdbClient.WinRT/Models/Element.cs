@@ -60,13 +60,6 @@ namespace AdvancedSharpAdbClient.WinRT
         public IAsyncAction ClickAsync() => element.ClickAsync().AsAsyncAction();
 
         /// <summary>
-        /// Clicks on this coordinates.
-        /// </summary>
-        /// <param name="timeout">A <see cref="System.TimeSpan"/> which can be used to cancel the asynchronous task.</param>
-        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction ClickAsync(TimeSpan timeout) => element.ClickAsync(timeout.GetCancellationToken()).AsAsyncAction();
-
-        /// <summary>
         /// Send text to device. Doesn't support Russian.
         /// </summary>
         /// <param name="text">The text to send.</param>
@@ -78,14 +71,6 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <param name="text">The text to send.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
         public IAsyncAction SendTextAsync(string text) => element.SendTextAsync(text).AsAsyncAction();
-
-        /// <summary>
-        /// Send text to device. Doesn't support Russian.
-        /// </summary>
-        /// <param name="text">The text to send.</param>
-        /// <param name="timeout">A <see cref="System.TimeSpan"/> which can be used to cancel the asynchronous task.</param>
-        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction SendTextAsync(string text, TimeSpan timeout) => element.SendTextAsync(text, timeout.GetCancellationToken()).AsAsyncAction();
 
         /// <summary>
         /// Clear the input text. Use <see cref="IAdbClient.ClearInput(DeviceData, int)"/> if the element is focused.
@@ -109,6 +94,6 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         /// <param name="charCount">The length of text to clear.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction ClearInputAsync(int charCount = 0) => element.ClearInputAsync(charCount).AsAsyncAction();
+        public IAsyncAction ClearInputAsync(int charCount) => element.ClearInputAsync(charCount).AsAsyncAction();
     }
 }

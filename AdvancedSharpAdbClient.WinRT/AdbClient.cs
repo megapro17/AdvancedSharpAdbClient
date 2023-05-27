@@ -29,7 +29,7 @@ namespace AdvancedSharpAdbClient.WinRT
     /// call the <see cref="GetDevices"/> method.
     /// </para>
     /// <para>
-    /// To run a command on a device, you can use the <see cref="ExecuteRemoteCommandAsync(string, DeviceData, IShellOutputReceiver, TimeSpan)"/>
+    /// To run a command on a device, you can use the <see cref="ExecuteRemoteCommandAsync(string, DeviceData, IShellOutputReceiver)"/>
     /// method.
     /// </para>
     /// </summary>
@@ -86,25 +86,16 @@ namespace AdvancedSharpAdbClient.WinRT
         public IAsyncOperation<int> GetAdbVersionAsync() => adbClient.GetAdbVersionAsync().AsAsyncOperation();
 
         /// <inheritdoc/>
-        public IAsyncOperation<int> GetAdbVersionAsync(TimeSpan timeout) => adbClient.GetAdbVersionAsync(timeout.GetCancellationToken()).AsAsyncOperation();
-
-        /// <inheritdoc/>
         public void KillAdb() => adbClient.KillAdb();
 
         /// <inheritdoc/>
         public IAsyncAction KillAdbAsync() => adbClient.KillAdbAsync().AsAsyncAction();
 
         /// <inheritdoc/>
-        public IAsyncAction KillAdbAsync(TimeSpan timeout) => adbClient.KillAdbAsync(timeout.GetCancellationToken()).AsAsyncAction();
-
-        /// <inheritdoc/>
         public IEnumerable<DeviceData> GetDevices() => adbClient.GetDevices().Select(DeviceData.GetDeviceData);
 
         /// <inheritdoc/>
         public IAsyncOperation<IEnumerable<DeviceData>> GetDevicesAsync() => Task.Run(async () => (await adbClient.GetDevicesAsync()).Select(DeviceData.GetDeviceData)).AsAsyncOperation();
-
-        /// <inheritdoc/>
-        public IAsyncOperation<IEnumerable<DeviceData>> GetDevicesAsync(TimeSpan timeout) => Task.Run(async () => (await adbClient.GetDevicesAsync(timeout.GetCancellationToken())).Select(DeviceData.GetDeviceData)).AsAsyncOperation();
 
         /// <inheritdoc/>
         public int CreateForward(DeviceData device, string local, string remote, bool allowRebind) => adbClient.CreateForward(device.deviceData, local, remote, allowRebind);
@@ -139,9 +130,6 @@ namespace AdvancedSharpAdbClient.WinRT
 
         /// <inheritdoc/>
         public IAsyncAction ExecuteRemoteCommandAsync(string command, DeviceData device, IShellOutputReceiver receiver) => adbClient.ExecuteRemoteCommandAsync(command, device.deviceData, WinRTOutputReceiver.GetShellOutputReceiver(receiver)).AsAsyncAction();
-
-        /// <inheritdoc/>
-        public IAsyncAction ExecuteRemoteCommandAsync(string command, DeviceData device, IShellOutputReceiver receiver, TimeSpan timeout) => adbClient.ExecuteRemoteCommandAsync(command, device.deviceData, WinRTOutputReceiver.GetShellOutputReceiver(receiver), timeout.GetCancellationToken()).AsAsyncAction();
 
         /// <inheritdoc/>
         public Framebuffer CreateRefreshableFramebuffer(DeviceData device) => Framebuffer.GetFramebuffer(adbClient.CreateRefreshableFramebuffer(device.deviceData));
