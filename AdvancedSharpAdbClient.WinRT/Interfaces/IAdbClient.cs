@@ -2,6 +2,7 @@
 // Copyright (c) The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere. All rights reserved.
 // </copyright>
 
+using AdvancedSharpAdbClient.Exceptions;
 using AdvancedSharpAdbClient.WinRT.Logs;
 using System;
 using System.Collections.Generic;
@@ -225,12 +226,30 @@ namespace AdvancedSharpAdbClient.WinRT
         void ExecuteRemoteCommand(string command, DeviceData device, IShellOutputReceiver receiver);
 
         /// <summary>
+        /// Executes a command on the device.
+        /// </summary>
+        /// <param name="command">The command to execute.</param>
+        /// <param name="device">The device on which to run the command.</param>
+        /// <param name="receiver">The receiver which will get the command output.</param>
+        /// <param name="encoding">The encoding to use when parsing the command output.</param>
+        void ExecuteRemoteCommand(string command, DeviceData device, IShellOutputReceiver receiver, int encoding);
+
+        /// <summary>
         /// Gets a <see cref="Framebuffer"/> which contains the framebuffer data for this device. The framebuffer data can be refreshed,
         /// giving you high performance access to the device's framebuffer.
         /// </summary>
         /// <param name="device">The device for which to get the framebuffer.</param>
         /// <returns>A <see cref="Framebuffer"/> object which can be used to get the framebuffer of the device.</returns>
         Framebuffer CreateRefreshableFramebuffer(DeviceData device);
+
+        /// <summary>
+        /// Gets the frame buffer from the specified end point.
+        /// </summary>
+        /// <param name="device">The device for which to get the framebuffer.</param>
+        /// <returns>The raw frame buffer.</returns>
+        /// <exception cref="AdbException">failed asking for frame buffer</exception>
+        /// <exception cref="AdbException">failed nudging</exception>
+        Framebuffer GetFrameBuffer(DeviceData device);
 
         /// <summary>
         /// Runs the event log service on a device.
@@ -367,7 +386,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// Like "install", but starts an install session.
         /// </summary>
         /// <param name="device">The device on which to install the application.</param>
-        /// <returns>Session ID</returns>
+        /// <returns>The session ID of this install session.</returns>
         string InstallCreate(DeviceData device);
 
         /// <summary>
@@ -375,8 +394,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         /// <param name="device">The device on which to install the application.</param>
         /// <param name="arguments">The arguments to pass to <c>adb install-create</c>.</param>
-        /// <returns>Session ID</returns>
-        [DefaultOverload]
+        /// <returns>The session ID of this install session.</returns>
         string InstallCreate(DeviceData device, [ReadOnlyArray] params string[] arguments);
 
         /// <summary>
@@ -384,7 +402,8 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         /// <param name="device">The device on which to install the application.</param>
         /// <param name="packageName">The package name of the baseAPK to install.</param>
-        /// <returns>Session ID</returns>
+        /// <returns>The session ID of this install session.</returns>
+        [DefaultOverload]
         string InstallCreate(DeviceData device, string packageName);
 
         /// <summary>
@@ -393,7 +412,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <param name="device">The device on which to install the application.</param>
         /// <param name="packageName">The package name of the baseAPK to install.</param>
         /// <param name="arguments">The arguments to pass to <c>adb install-create</c>.</param>
-        /// <returns>Session ID</returns>
+        /// <returns>The session ID of this install session.</returns>
         string InstallCreate(DeviceData device, string packageName, [ReadOnlyArray] params string[] arguments);
 
         /// <summary>
