@@ -2,10 +2,9 @@
 // Copyright (c) The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere. All rights reserved.
 // </copyright>
 
+using AdvancedSharpAdbClient.WinRT.Logs;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation.Metadata;
@@ -19,6 +18,11 @@ namespace AdvancedSharpAdbClient.WinRT
     /// </summary>
     public interface IAdbClient
     {
+        /// <summary>
+        /// Gets the <see cref="string"/> of the <see cref="EndPoint"/> at which the Android Debug Bridge server is listening.
+        /// </summary>
+        string EndPoint { get; }
+
         /// <summary>
         /// Ask the ADB server for its internal version number.
         /// </summary>
@@ -229,6 +233,14 @@ namespace AdvancedSharpAdbClient.WinRT
         Framebuffer CreateRefreshableFramebuffer(DeviceData device);
 
         /// <summary>
+        /// Runs the event log service on a device.
+        /// </summary>
+        /// <param name="device">The device on which to run the event log service.</param>
+        /// <param name="messageSink">A callback which will receive the event log messages as they are received.</param>
+        /// <param name="logNames">Optionally, the names of the logs to receive.</param>
+        void RunLogService(DeviceData device, MessageSink messageSink, [ReadOnlyArray] params LogId[] logNames);
+
+        /// <summary>
         /// Reboots the specified adb socket address.
         /// </summary>
         /// <param name="device">The device to reboot.</param>
@@ -406,6 +418,14 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <param name="device">The device for which to get the list of features supported.</param>
         /// <returns>A list of all features supported by the current device.</returns>
         IEnumerable<string> GetFeatureSet(DeviceData device);
+
+        /// <summary>
+        /// Gets the current device screen snapshot.
+        /// </summary>
+        /// <param name="device">The device for which to get the screen snapshot.</param>
+        /// <returns>A <see cref="string"/> containing current hierarchy.
+        /// Failed if start with <c>ERROR</c> or <c>java.lang.Exception</c>.</returns>
+        string DumpScreenString(DeviceData device);
 
         /// <summary>
         /// Gets the current device screen snapshot.

@@ -53,13 +53,6 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         public InstallProgressEventArgs(int packageUploaded, int packageRequired, double uploadProgress) =>
             installProgressEventArgs = new(packageUploaded, packageRequired, uploadProgress);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InstallProgressEventArgs"/> class.
-        /// Which is used for <see cref="PackageInstallProgressState.Uploading"/> and <see cref="PackageInstallProgressState.WriteSession"/> state.
-        /// </summary>
-        public InstallProgressEventArgs(int packageCleaned, int packageRequired, PackageInstallProgressState state, object @null) =>
-            installProgressEventArgs = new(packageCleaned, packageRequired, (AdvancedSharpAdbClient.DeviceCommands.PackageInstallProgressState)state);
-
         internal InstallProgressEventArgs(AdvancedSharpAdbClient.DeviceCommands.InstallProgressEventArgs installProgressEventArgs) => this.installProgressEventArgs = installProgressEventArgs;
 
         internal static InstallProgressEventArgs GetInstallProgressEventArgs(AdvancedSharpAdbClient.DeviceCommands.InstallProgressEventArgs element) => new(element);

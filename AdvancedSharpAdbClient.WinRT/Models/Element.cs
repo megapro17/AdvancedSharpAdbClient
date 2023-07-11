@@ -5,6 +5,7 @@
 using AdvancedSharpAdbClient.WinRT.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.Foundation;
 
 namespace AdvancedSharpAdbClient.WinRT
@@ -26,6 +27,11 @@ namespace AdvancedSharpAdbClient.WinRT
         }
 
         /// <summary>
+        /// Gets the children of this element.
+        /// </summary>
+        public IEnumerable<Element> Children => element.Children.Select(GetElement);
+
+        /// <summary>
         /// Gets or sets element attributes.
         /// </summary>
         public IDictionary<string, string> Attributes => element.Attributes;
@@ -43,6 +49,11 @@ namespace AdvancedSharpAdbClient.WinRT
         internal Element(AdvancedSharpAdbClient.Element element) => this.element = element;
 
         internal static Element GetElement(AdvancedSharpAdbClient.Element element) => new(element);
+
+        /// <summary>
+        /// Gets the count of <see cref="Children"/> in this element.
+        /// </summary>
+        public int GetChildCount() => element.GetChildCount();
 
         /// <summary>
         /// Clicks on this coordinates.

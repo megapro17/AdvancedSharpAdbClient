@@ -2,10 +2,16 @@
 // Copyright (c) The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere. All rights reserved.
 // </copyright>
 
-using AdvancedSharpAdbClient.WinRT.Extensions;
 using System;
+using System.Threading.Tasks;
 using Windows.Foundation;
-using TimeSpan = System.TimeSpan;
+using Windows.Foundation.Metadata;
+using Windows.System;
+using Windows.UI.Core;
+
+#if WINDOWS_UWP
+using Windows.UI.Xaml.Media.Imaging;
+#endif
 
 namespace AdvancedSharpAdbClient.WinRT
 {
@@ -34,30 +40,59 @@ namespace AdvancedSharpAdbClient.WinRT
 
         /// <summary>
         /// Gets the framebuffer header. The header contains information such as the width and height and the color encoding.
-        /// This property is set after you call <see cref="RefreshAsync()"/>.
+        /// This property is set after you call <see cref="RefreshAsync(bool)"/>.
         /// </summary>
         public FramebufferHeader Header => FramebufferHeader.GetFramebufferHeader(framebuffer.Header);
 
         /// <summary>
         /// Gets the framebuffer data. You need to parse the <see cref="FramebufferHeader"/> to interpret this data (such as the color encoding).
-        /// This property is set after you call <see cref="RefreshAsync()"/>.
+        /// This property is set after you call <see cref="RefreshAsync(bool)"/>.
         /// </summary>
         public byte[] Data => framebuffer.Data;
+
+        /// <summary>
+        /// Refreshes the framebuffer: fetches the latest framebuffer data from the device. Access the <see cref="Header"/>
+        /// and <see cref="Data"/> properties to get the updated framebuffer data.
+        /// </summary>
+        /// <param name="reset">Refreshes the header of framebuffer when <see langword="true"/>.</param>
+        public void Refresh(bool reset) => framebuffer.Refresh(reset);
 
         /// <summary>
         /// Asynchronously refreshes the framebuffer: fetches the latest framebuffer data from the device. Access the <see cref="Header"/>
         /// and <see cref="Data"/> properties to get the updated framebuffer data.
         /// </summary>
+        /// <param name="reset">Refreshes the header of framebuffer when <see langword="true"/>.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction RefreshAsync() => framebuffer.RefreshAsync().AsAsyncAction();
+        public IAsyncAction RefreshAsync(bool reset) => framebuffer.RefreshAsync(reset).AsAsyncAction();
 
-        /// <inheritdoc/>
-        private void Dispose(bool disposing) => framebuffer?.Dispose();
+#if WINDOWS_UWP
+        /// <summary>
+        /// Converts the framebuffer data to a <see cref="WriteableBitmap"/>.
+        /// </summary>
+        /// <returns>An <see cref="WriteableBitmap"/> which represents the framebuffer data.</returns>
+        public IAsyncOperation<WriteableBitmap> ToBitmap() => framebuffer.ToBitmap().AsAsyncOperation();
+
+        /// <summary>
+        /// Converts the framebuffer data to a <see cref="WriteableBitmap"/>.
+        /// </summary>
+        /// <param name="dispatcher">The target <see cref="CoreDispatcher"/> to invoke the code on.</param>
+        /// <returns>An <see cref="WriteableBitmap"/> which represents the framebuffer data.</returns>
+        [DefaultOverload]
+        public IAsyncOperation<WriteableBitmap> ToBitmap(CoreDispatcher dispatcher) => framebuffer.ToBitmap(dispatcher).AsAsyncOperation();
+
+        /// <summary>
+        /// Converts the framebuffer data to a <see cref="WriteableBitmap"/>.
+        /// </summary>
+        /// <param name="dispatcher">The target <see cref="DispatcherQueue"/> to invoke the code on.</param>
+        /// <returns>An <see cref="WriteableBitmap"/> which represents the framebuffer data.</returns>
+        [ContractVersion(typeof(UniversalApiContract), 327680u)]
+        public IAsyncOperation<WriteableBitmap> ToBitmap(DispatcherQueue dispatcher) => framebuffer.ToBitmap(dispatcher).AsAsyncOperation();
+#endif
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            Dispose(disposing: true);
+            framebuffer?.Dispose();
             GC.SuppressFinalize(this);
         }
     }

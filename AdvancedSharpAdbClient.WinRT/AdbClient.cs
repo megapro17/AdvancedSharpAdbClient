@@ -5,6 +5,7 @@
 using AdvancedSharpAdbClient.DeviceCommands;
 using AdvancedSharpAdbClient.WinRT.DeviceCommands;
 using AdvancedSharpAdbClient.WinRT.Extensions;
+using AdvancedSharpAdbClient.WinRT.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,9 +80,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         public static int AdbServerPort => AdvancedSharpAdbClient.AdbClient.AdbServerPort;
 
-        /// <summary>
-        /// Gets the <see cref="string"/> of <see cref="System.Net.EndPoint"/> at which the adb server is listening.
-        /// </summary>
+        /// <inheritdoc/>
         public string EndPoint => adbClient.EndPoint.ToString();
 
         /// <summary>
@@ -155,6 +154,9 @@ namespace AdvancedSharpAdbClient.WinRT
 
         /// <inheritdoc/>
         public Framebuffer CreateRefreshableFramebuffer(DeviceData device) => Framebuffer.GetFramebuffer(adbClient.CreateRefreshableFramebuffer(device.deviceData));
+
+        /// <inheritdoc/>
+        public void RunLogService(DeviceData device, MessageSink messageSink, [ReadOnlyArray] params LogId[] logNames) => adbClient.RunLogService(device.deviceData, (logEntry) => messageSink(LogEntry.GetLogEntry(logEntry)), logNames.Cast<AdvancedSharpAdbClient.Logs.LogId>().ToArray());
 
         /// <inheritdoc/>
         public void Reboot(DeviceData device) => adbClient.Reboot(device.deviceData);
@@ -239,6 +241,9 @@ namespace AdvancedSharpAdbClient.WinRT
 
         /// <inheritdoc/>
         public IEnumerable<string> GetFeatureSet(DeviceData device) => adbClient.GetFeatureSet(device.deviceData);
+
+        /// <inheritdoc/>
+        public string DumpScreenString(DeviceData device) => adbClient.DumpScreenString(device.deviceData);
 
         /// <inheritdoc/>
         public XmlDocument DumpScreen(DeviceData device) => adbClient.DumpScreenWinRT(device.deviceData);

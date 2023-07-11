@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
@@ -25,7 +26,7 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// <summary>
         /// Occurs when there is a change in the status of the installing.
         /// </summary>
-        public event TypedEventHandler<object, InstallProgressEventArgs> InstallProgressChanged;
+        public event EventHandler<InstallProgressEventArgs> InstallProgressChanged;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PackageManager"/> class.
