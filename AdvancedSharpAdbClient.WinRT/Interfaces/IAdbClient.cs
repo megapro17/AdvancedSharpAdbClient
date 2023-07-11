@@ -405,7 +405,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         /// <param name="device">The device for which to get the list of features supported.</param>
         /// <returns>A list of all features supported by the current device.</returns>
-        IList<string> GetFeatureSet(DeviceData device);
+        IEnumerable<string> GetFeatureSet(DeviceData device);
 
         /// <summary>
         /// Gets the current device screen snapshot.

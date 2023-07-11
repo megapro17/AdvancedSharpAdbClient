@@ -2,6 +2,8 @@
 // Copyright (c) The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere. All rights reserved.
 // </copyright>
 
+using AdvancedSharpAdbClient.DeviceCommands;
+using AdvancedSharpAdbClient.WinRT.DeviceCommands;
 using AdvancedSharpAdbClient.WinRT.Extensions;
 using System;
 using System.Collections.Generic;
@@ -9,13 +11,14 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Storage.Streams;
+using AndroidProcess = AdvancedSharpAdbClient.WinRT.DeviceCommands.AndroidProcess;
 using TimeSpan = System.TimeSpan;
+using VersionInfo = AdvancedSharpAdbClient.WinRT.DeviceCommands.VersionInfo;
 
 namespace AdvancedSharpAdbClient.WinRT
 {
@@ -36,19 +39,19 @@ namespace AdvancedSharpAdbClient.WinRT
     /// <remarks><para><seealso href="https://github.com/android/platform_system_core/blob/master/adb/SERVICES.TXT">SERVICES.TXT</seealso></para>
     /// <para><seealso href="https://github.com/android/platform_system_core/blob/master/adb/adb_client.c">adb_client.c</seealso></para>
     /// <para><seealso href="https://github.com/android/platform_system_core/blob/master/adb/adb.c">adb.c</seealso></para></remarks>
-    public sealed class AdbClient : IAdbClient, IAdbClientAsync
+    public sealed class AdbClient : IAdbClient, IAdbClientAsync, IDeviceExtensions, IDeviceExtensionsAsync
     {
         internal readonly AdvancedSharpAdbClient.AdbClient adbClient;
 
         /// <summary>
-        /// The port at which the Android Debug Bridge server listens by default.
-        /// </summary>
-        public static int AdbServerPort => 5037;
-
-        /// <summary>
         /// The default port to use when connecting to a device over TCP/IP.
         /// </summary>
-        public static int DefaultPort => 5555;
+        public static int DefaultPort { get; } = AdvancedSharpAdbClient.AdbClient.DefaultPort;
+
+        /// <summary>
+        /// The port at which the Android Debug Bridge server listens by default.
+        /// </summary>
+        public static int DefaultAdbServerPort { get; } = AdvancedSharpAdbClient.AdbClient.DefaultAdbServerPort;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AdbClient"/> class.
@@ -58,9 +61,28 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Initializes a new instance of the <see cref="AdbClient"/> class.
         /// </summary>
-        /// <param name="address">The host name or a string representation of the IP address.</param>
-        /// <param name="port">The port number associated with the address, or 0 to specify any available port. port is in host order.</param>
-        public AdbClient(string address, int port) => adbClient = new(new DnsEndPoint(address, port), Factories.AdbSocketFactory);
+        /// <param name="host">The host address at which the adb server is listening.</param>
+        /// <param name="port">The port at which the adb server is listening.</param>
+        public AdbClient(string host, int port) => adbClient = new(host, port);
+
+        /// <summary>
+        /// Get or set the <see cref="System.Text.Encoding.CodePage"/> of default encoding
+        /// </summary>
+        public static int Encoding
+        {
+            get => AdvancedSharpAdbClient.AdbClient.Encoding.CodePage;
+            set => AdvancedSharpAdbClient.AdbClient.Encoding = System.Text.Encoding.GetEncoding(value);
+        }
+
+        /// <summary>
+        /// Gets the current port at which the Android Debug Bridge server listens.
+        /// </summary>
+        public static int AdbServerPort => AdvancedSharpAdbClient.AdbClient.AdbServerPort;
+
+        /// <summary>
+        /// Gets the <see cref="string"/> of <see cref="System.Net.EndPoint"/> at which the adb server is listening.
+        /// </summary>
+        public string EndPoint => adbClient.EndPoint.ToString();
 
         /// <summary>
         /// Create an ASCII string preceded by four hex digits. The opening "####"
@@ -183,18 +205,18 @@ namespace AdvancedSharpAdbClient.WinRT
         public void Install(DeviceData device, IInputStream apk, [ReadOnlyArray] params string[] arguments) => adbClient.Install(device.deviceData, apk.AsStreamForRead(), arguments);
 
         /// <inheritdoc/>
-        public void InstallMultiple(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName) => adbClient.InstallMultiple(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()).ToArray(), packageName);
+        public void InstallMultiple(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName) => adbClient.InstallMultiple(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()), packageName);
 
         /// <inheritdoc/>
-        public void InstallMultiple(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName, [ReadOnlyArray] params string[] arguments) => adbClient.InstallMultiple(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()).ToArray(), packageName, arguments);
-
-        /// <inheritdoc/>
-        [DefaultOverload]
-        public void InstallMultiple(DeviceData device, IInputStream baseAPK, IEnumerable<IInputStream> splitAPKs) => adbClient.InstallMultiple(device.deviceData, baseAPK.AsStreamForRead(), splitAPKs.Select((x) => x.AsStreamForRead()).ToArray());
+        public void InstallMultiple(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName, [ReadOnlyArray] params string[] arguments) => adbClient.InstallMultiple(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()), packageName, arguments);
 
         /// <inheritdoc/>
         [DefaultOverload]
-        public void InstallMultiple(DeviceData device, IInputStream baseAPK, IEnumerable<IInputStream> splitAPKs, [ReadOnlyArray] params string[] arguments) => adbClient.InstallMultiple(device.deviceData, baseAPK.AsStreamForRead(), splitAPKs.Select((x) => x.AsStreamForRead()).ToArray(), arguments);
+        public void InstallMultiple(DeviceData device, IInputStream baseAPK, IEnumerable<IInputStream> splitAPKs) => adbClient.InstallMultiple(device.deviceData, baseAPK.AsStreamForRead(), splitAPKs.Select((x) => x.AsStreamForRead()));
+
+        /// <inheritdoc/>
+        [DefaultOverload]
+        public void InstallMultiple(DeviceData device, IInputStream baseAPK, IEnumerable<IInputStream> splitAPKs, [ReadOnlyArray] params string[] arguments) => adbClient.InstallMultiple(device.deviceData, baseAPK.AsStreamForRead(), splitAPKs.Select((x) => x.AsStreamForRead()), arguments);
 
         /// <inheritdoc/>
         public string InstallCreate(DeviceData device) => adbClient.InstallCreate(device.deviceData);
@@ -216,20 +238,10 @@ namespace AdvancedSharpAdbClient.WinRT
         public void InstallCommit(DeviceData device, string session) => adbClient.InstallCommit(device.deviceData, session);
 
         /// <inheritdoc/>
-        public IList<string> GetFeatureSet(DeviceData device) => adbClient.GetFeatureSet(device.deviceData);
+        public IEnumerable<string> GetFeatureSet(DeviceData device) => adbClient.GetFeatureSet(device.deviceData);
 
         /// <inheritdoc/>
-        public XmlDocument DumpScreen(DeviceData device)
-        {
-            string xmlString = adbClient.DumpScreen(device.deviceData)?.OuterXml;
-            if (!string.IsNullOrEmpty(xmlString))
-            {
-                XmlDocument doc = new();
-                doc.LoadXml(xmlString);
-                return doc;
-            }
-            return null;
-        }
+        public XmlDocument DumpScreen(DeviceData device) => adbClient.DumpScreenWinRT(device.deviceData);
 
         /// <inheritdoc/>
         public void Click(DeviceData device, Cords cords) => adbClient.Click(device.deviceData, cords.cords);
@@ -285,17 +297,73 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <inheritdoc/>
         public void HomeBtn(DeviceData device) => adbClient.HomeBtn(device.deviceData);
 
+        /// <inheritdoc/>
+        public void ExecuteShellCommand(DeviceData device, string command, IShellOutputReceiver receiver) =>
+            ExecuteRemoteCommand(command, device, receiver);
+
+        /// <inheritdoc/>
+        public IAsyncAction ExecuteShellCommandAsync(DeviceData device, string command, IShellOutputReceiver receiver) =>
+            ExecuteRemoteCommandAsync(command, device, receiver);
+
+        /// <inheritdoc/>
+        public string GetProperty(DeviceData device, string property) =>
+            adbClient.GetProperty(device.deviceData, property);
+
+        /// <inheritdoc/>
+        public IAsyncOperation<string> GetPropertyAsync(DeviceData device, string property) =>
+            adbClient.GetPropertyAsync(device.deviceData, property).AsAsyncOperation();
+
+        /// <inheritdoc/>
+        public IDictionary<string, string> GetProperties(DeviceData device) =>
+            adbClient.GetProperties(device.deviceData);
+
+        /// <inheritdoc/>
+        public IAsyncOperation<IDictionary<string, string>> GetPropertiesAsync(DeviceData device) =>
+            Task.Run(async () => await adbClient.GetPropertiesAsync(device.deviceData) as IDictionary<string, string>).AsAsyncOperation();
+
+        /// <inheritdoc/>
+        public IDictionary<string, string> GetEnvironmentVariables(DeviceData device) =>
+            adbClient.GetEnvironmentVariables(device.deviceData);
+
+        /// <inheritdoc/>
+        public IAsyncOperation<IDictionary<string, string>> GetEnvironmentVariablesAsync(DeviceData device) =>
+            Task.Run(async () => await adbClient.GetEnvironmentVariablesAsync(device.deviceData) as IDictionary<string, string>).AsAsyncOperation();
+
+        /// <inheritdoc/>
+        public void UninstallPackage(DeviceData device, string packageName) =>
+            adbClient.UninstallPackage(device.deviceData, packageName);
+
+        /// <inheritdoc/>
+        public IAsyncAction UninstallPackageAsync(DeviceData device, string packageName) =>
+            adbClient.UninstallPackageAsync(device.deviceData, packageName).AsAsyncAction();
+
+        /// <inheritdoc/>
+        public VersionInfo GetPackageVersion(DeviceData device, string packageName) =>
+            VersionInfo.GetVersionInfo(adbClient.GetPackageVersion(device.deviceData, packageName));
+
+        /// <inheritdoc/>
+        public IAsyncOperation<VersionInfo> GetPackageVersionAsync(DeviceData device, string packageName) =>
+            Task.Run(async () => VersionInfo.GetVersionInfo(await adbClient.GetPackageVersionAsync(device.deviceData, packageName))).AsAsyncOperation();
+
+        /// <inheritdoc/>
+        public IEnumerable<AndroidProcess> ListProcesses(DeviceData device) =>
+            adbClient.ListProcesses(device.deviceData).Select(AndroidProcess.GetAndroidProcess);
+
+        /// <inheritdoc/>
+        public IAsyncOperation<IEnumerable<AndroidProcess>> ListProcessesAsync(DeviceData device) =>
+            Task.Run(async () => (await adbClient.ListProcessesAsync(device.deviceData)).Select(AndroidProcess.GetAndroidProcess)).AsAsyncOperation();
+
         /// <summary>
         /// Sets default encoding (default - UTF8)
         /// </summary>
         /// <param name="codepage">The code page identifier of the preferred encoding.</param>
         [DefaultOverload]
-        public static void SetEncoding(int codepage) => AdvancedSharpAdbClient.AdbClient.SetEncoding(Encoding.GetEncoding(codepage));
+        public static void SetEncoding(int codepage) => AdvancedSharpAdbClient.AdbClient.SetEncoding(System.Text.Encoding.GetEncoding(codepage));
 
         /// <summary>
         /// Sets default encoding (default - UTF8)
         /// </summary>
         /// <param name="name">The code page name of the preferred encoding.</param>
-        public static void SetEncoding(string name) => AdvancedSharpAdbClient.AdbClient.SetEncoding(Encoding.GetEncoding(name));
+        public static void SetEncoding(string name) => AdvancedSharpAdbClient.AdbClient.SetEncoding(System.Text.Encoding.GetEncoding(name));
     }
 }

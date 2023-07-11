@@ -18,16 +18,13 @@ int main()
     {
         auto adbClient = AdbClient::AdbClient();
         auto devices = adbClient.GetDevices();
-        printf("Devices:\n");
         for (auto device : devices)
         {
             printf("%ls\n", device.ToString().c_str());
-            PackageManager packageManager = PackageManager(adbClient, device);
-            auto packages = packageManager.Packages();
-            printf("Packages:\n");
-            for (auto package : packages)
+            auto processes = adbClient.ListProcesses(device);
+            for (auto process : processes)
             {
-                printf("%ls\n", package.Key().c_str());
+                printf("%ls\n", process.ToString().c_str());
             }
         }
         adbClient.KillAdb();

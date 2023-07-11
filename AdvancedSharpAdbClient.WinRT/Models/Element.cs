@@ -28,11 +28,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Gets or sets element attributes.
         /// </summary>
-        public IDictionary<string, string> Attributes
-        {
-            get => element.Attributes;
-            set => element.Attributes = value.GetDictionary();
-        }
+        public IDictionary<string, string> Attributes => element.Attributes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Element"/> class.

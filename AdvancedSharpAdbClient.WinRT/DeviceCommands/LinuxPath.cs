@@ -16,7 +16,7 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// <summary>
         /// The directory separator character.
         /// </summary>
-        public static char DirectorySeparatorChar { get; } = '/';
+        public static char DirectorySeparatorChar { get; } = AdvancedSharpAdbClient.DeviceCommands.LinuxPath.DirectorySeparatorChar;
 
         /// <summary>
         /// Combine the specified paths to form one path.

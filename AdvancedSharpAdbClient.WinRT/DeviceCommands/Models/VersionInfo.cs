@@ -14,20 +14,12 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// <summary>
         /// Gets or sets the version code of an Android application.
         /// </summary>
-        public int VersionCode
-        {
-            get => versionInfo.VersionCode;
-            set => versionInfo.VersionCode = value;
-        }
+        public int VersionCode => versionInfo.VersionCode;
 
         /// <summary>
         /// Gets or sets the version name of an Android application.
         /// </summary>
-        public string VersionName
-        {
-            get => versionInfo.VersionName;
-            set => versionInfo.VersionName = value;
-        }
+        public string VersionName => versionInfo.VersionName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VersionInfo"/> class.

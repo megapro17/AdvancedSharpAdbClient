@@ -17,20 +17,12 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Gets or sets a value indicating whether the server is currently running.
         /// </summary>
-        public bool IsRunning
-        {
-            get => adbServerStatus.IsRunning;
-            set => adbServerStatus.IsRunning = value;
-        }
+        public bool IsRunning => adbServerStatus.IsRunning;
 
         /// <summary>
         /// Gets or sets, when the server is running, the version of the server that is running.
         /// </summary>
-        public PackageVersion Version
-        {
-            get => adbServerStatus.Version.GetPackageVersion();
-            set => adbServerStatus.Version = value.GetVersion();
-        }
+        public PackageVersion Version => adbServerStatus.Version.GetPackageVersion();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AdbServerStatus"/> class.

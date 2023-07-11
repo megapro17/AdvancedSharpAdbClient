@@ -4,7 +4,6 @@
 
 using System.Collections.Generic;
 using Windows.Foundation;
-using TimeSpan = System.TimeSpan;
 
 namespace AdvancedSharpAdbClient.WinRT
 {
@@ -17,7 +16,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Ask the ADB server for its internal version number.
         /// </summary>
-        /// <returns>An <see cref="IAsyncOperation{TResult}"/> which return the ADB version number.</returns>
+        /// <returns>An <see cref="IAsyncOperation{Int32}"/> which return the ADB version number.</returns>
         IAsyncOperation<int> GetAdbVersionAsync();
 
         /// <summary>
@@ -31,7 +30,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Gets the devices that are available for communication.
         /// </summary>
-        /// <returns>An <see cref="IAsyncOperation{TResult}"/> which return the list of devices that are connected.</returns>
+        /// <returns>An <see cref="IAsyncOperation{IEnumerable}"/> which return the list of devices that are connected.</returns>
         IAsyncOperation<IEnumerable<DeviceData>> GetDevicesAsync();
 
         /// <summary>
