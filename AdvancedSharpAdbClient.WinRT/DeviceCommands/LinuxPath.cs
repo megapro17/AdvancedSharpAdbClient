@@ -23,7 +23,7 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// </summary>
         /// <param name="paths">The paths.</param>
         /// <returns>The combined path.</returns>
-        public static string Combine([ReadOnlyArray] params string[] paths)=> AdvancedSharpAdbClient.DeviceCommands.LinuxPath.Combine(paths);
+        public static string Combine([ReadOnlyArray] params string[] paths) => AdvancedSharpAdbClient.DeviceCommands.LinuxPath.Combine(paths);
 
         /// <summary>
         /// Returns the directory information for the specified path string.

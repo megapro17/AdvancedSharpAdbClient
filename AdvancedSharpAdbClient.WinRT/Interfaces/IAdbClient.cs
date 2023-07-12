@@ -503,7 +503,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <param name="packageName">The package name of the app to check.</param>
         /// <returns><see langword="true"/> if the app is running in background; otherwise, <see langword="false"/>.</returns>
         bool IsAppRunning(DeviceData device, string packageName);
-        
+
         /// <summary>
         /// Get the <see cref="AppStatus"/> of the app.
         /// </summary>

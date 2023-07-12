@@ -2,9 +2,6 @@
 // Copyright (c) The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere. All rights reserved.
 // </copyright>
 
-using System.Diagnostics;
-using System.Xml.Linq;
-
 namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
 {
     /// <summary>
@@ -526,7 +523,7 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// <summary>
         /// Initializes a new instance of the <see cref="AndroidProcess"/> class.
         /// </summary>
-        public AndroidProcess()=> androidProcess = new AdvancedSharpAdbClient.DeviceCommands.AndroidProcess();
+        public AndroidProcess() => androidProcess = new AdvancedSharpAdbClient.DeviceCommands.AndroidProcess();
 
         internal AndroidProcess(AdvancedSharpAdbClient.DeviceCommands.AndroidProcess androidProcess) => this.androidProcess = androidProcess;
 

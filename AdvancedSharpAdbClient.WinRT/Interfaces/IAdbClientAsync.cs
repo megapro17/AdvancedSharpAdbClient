@@ -4,10 +4,8 @@
 
 using AdvancedSharpAdbClient.Exceptions;
 using AdvancedSharpAdbClient.WinRT.Logs;
-using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
