@@ -11,6 +11,10 @@
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
+      name="AdvancedSharpAdbClient.WinRT.SyncService"
+      threadingModel="both"
+      xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
       name="AdvancedSharpAdbClient.WinRT.DeviceCommands.LinuxPath"
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />

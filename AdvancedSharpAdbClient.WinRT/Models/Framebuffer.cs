@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
@@ -63,7 +64,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         /// <param name="reset">Refreshes the header of framebuffer when <see langword="true"/>.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction RefreshAsync(bool reset) => framebuffer.RefreshAsync(reset).AsAsyncAction();
+        public IAsyncAction RefreshAsync(bool reset) => AsyncInfo.Run((cancellationToken) => framebuffer.RefreshAsync(reset, cancellationToken));
 
 #if WINDOWS_UWP
         /// <summary>

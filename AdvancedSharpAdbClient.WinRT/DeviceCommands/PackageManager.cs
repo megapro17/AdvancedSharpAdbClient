@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
@@ -93,7 +94,7 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// Refreshes the packages.
         /// </summary>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction RefreshPackagesAsync() => packageManager.RefreshPackagesAsync().AsAsyncAction();
+        public IAsyncAction RefreshPackagesAsync() => AsyncInfo.Run(packageManager.RefreshPackagesAsync);
 
         /// <summary>
         /// Installs an Android application on device.
@@ -108,7 +109,7 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// <param name="packageFilePath">The absolute file system path to file on local host to install.</param>
         /// <param name="reinstall"><see langword="true"/> if re-install of app should be performed; otherwise, <see langword="false"/>.</param>
         /// <returns>A <see cref="Task"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction InstallPackageAsync(string packageFilePath, bool reinstall) => packageManager.InstallPackageAsync(packageFilePath, reinstall).AsAsyncAction();
+        public IAsyncAction InstallPackageAsync(string packageFilePath, bool reinstall) => AsyncInfo.Run((cancellationToken) => packageManager.InstallPackageAsync(packageFilePath, reinstall, cancellationToken));
 
         /// <summary>
         /// Installs the application package that was pushed to a temporary location on the device.
@@ -116,14 +117,14 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// <param name="remoteFilePath">absolute file path to package file on device.</param>
         /// <param name="reinstall">Set to <see langword="true"/> if re-install of app should be performed.</param>
         public void InstallRemotePackage(string remoteFilePath, bool reinstall) => packageManager.InstallRemotePackage(remoteFilePath, reinstall);
-        
+
         /// <summary>
         /// Installs the application package that was pushed to a temporary location on the device.
         /// </summary>
         /// <param name="remoteFilePath">absolute file path to package file on device.</param>
         /// <param name="reinstall">Set to <see langword="true"/> if re-install of app should be performed.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction InstallRemotePackageAsync(string remoteFilePath, bool reinstall) => packageManager.InstallRemotePackageAsync(remoteFilePath, reinstall).AsAsyncAction();
+        public IAsyncAction InstallRemotePackageAsync(string remoteFilePath, bool reinstall) => AsyncInfo.Run((cancellationToken) => packageManager.InstallRemotePackageAsync(remoteFilePath, reinstall, cancellationToken));
 
         /// <summary>
         /// Installs Android multiple application on device.
@@ -142,7 +143,7 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// <param name="reinstall">Set to <see langword="true"/> if re-install of app should be performed.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
         [DefaultOverload]
-        public IAsyncAction InstallMultiplePackageAsync(string basePackageFilePath, IList<string> splitPackageFilePaths, bool reinstall) => packageManager.InstallMultiplePackageAsync(basePackageFilePath, splitPackageFilePaths, reinstall).AsAsyncAction();
+        public IAsyncAction InstallMultiplePackageAsync(string basePackageFilePath, IList<string> splitPackageFilePaths, bool reinstall) => AsyncInfo.Run((cancellationToken) => packageManager.InstallMultiplePackageAsync(basePackageFilePath, splitPackageFilePaths, reinstall, cancellationToken));
 
         /// <summary>
         /// Installs Android multiple application on device.
@@ -159,7 +160,7 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// <param name="packageName">The absolute package name of the base app.</param>
         /// <param name="reinstall">Set to <see langword="true"/> if re-install of app should be performed.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction InstallMultiplePackageAsync(IList<string> splitPackageFilePaths, string packageName, bool reinstall) => packageManager.InstallMultiplePackageAsync(splitPackageFilePaths, packageName, reinstall).AsAsyncAction();
+        public IAsyncAction InstallMultiplePackageAsync(IList<string> splitPackageFilePaths, string packageName, bool reinstall) => AsyncInfo.Run((cancellationToken) => packageManager.InstallMultiplePackageAsync(splitPackageFilePaths, packageName, reinstall, cancellationToken));
         
         /// <summary>
         /// Installs the multiple application package that was pushed to a temporary location on the device.
@@ -178,7 +179,7 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// <param name="reinstall">Set to <see langword="true"/> if re-install of app should be performed.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
         [DefaultOverload]
-        public IAsyncAction InstallMultipleRemotePackageAsync(string baseRemoteFilePath, IList<string> splitRemoteFilePaths, bool reinstall) => packageManager.InstallMultipleRemotePackageAsync(baseRemoteFilePath, splitRemoteFilePaths, reinstall).AsAsyncAction();
+        public IAsyncAction InstallMultipleRemotePackageAsync(string baseRemoteFilePath, IList<string> splitRemoteFilePaths, bool reinstall) => AsyncInfo.Run((cancellationToken) => packageManager.InstallMultipleRemotePackageAsync(baseRemoteFilePath, splitRemoteFilePaths, reinstall, cancellationToken));
         
         /// <summary>
         /// Installs the multiple application package that was pushed to a temporary location on the device.
@@ -195,7 +196,7 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// <param name="packageName">The absolute package name of the base app.</param>
         /// <param name="reinstall">Set to <see langword="true"/> if re-install of app should be performed.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction InstallMultipleRemotePackageAsync(IList<string> splitRemoteFilePaths, string packageName, bool reinstall) => packageManager.InstallMultipleRemotePackageAsync(splitRemoteFilePaths, packageName, reinstall).AsAsyncAction();
+        public IAsyncAction InstallMultipleRemotePackageAsync(IList<string> splitRemoteFilePaths, string packageName, bool reinstall) => AsyncInfo.Run((cancellationToken) => packageManager.InstallMultipleRemotePackageAsync(splitRemoteFilePaths, packageName, reinstall, cancellationToken));
         
         /// <summary>
         /// Uninstalls a package from the device.
@@ -208,7 +209,7 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// </summary>
         /// <param name="packageName">The name of the package to uninstall.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction UninstallPackageAsync(string packageName) => packageManager.UninstallPackageAsync(packageName).AsAsyncAction();
+        public IAsyncAction UninstallPackageAsync(string packageName) => AsyncInfo.Run((cancellationToken) => packageManager.UninstallPackageAsync(packageName, cancellationToken));
 
         /// <summary>
         /// Requests the version information from the device.
@@ -221,6 +222,6 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
         /// </summary>
         /// <param name="packageName">The name of the package from which to get the application version.</param>
         /// <returns>A <see cref="IAsyncOperation{VersionInfo}"/> which return the <see cref="VersionInfo"/> of target application.</returns>
-        public IAsyncOperation<VersionInfo> GetVersionInfoAsync(string packageName) => Task.Run(async () => VersionInfo.GetVersionInfo(await packageManager.GetVersionInfoAsync(packageName))).AsAsyncOperation();
+        public IAsyncOperation<VersionInfo> GetVersionInfoAsync(string packageName) => AsyncInfo.Run(async (cancellationToken) => VersionInfo.GetVersionInfo(await packageManager.GetVersionInfoAsync(packageName, cancellationToken)));
     }
 }

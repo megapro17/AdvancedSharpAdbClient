@@ -104,25 +104,25 @@ namespace AdvancedSharpAdbClient.WinRT
         public int GetAdbVersion() => adbClient.GetAdbVersion();
 
         /// <inheritdoc/>
-        public IAsyncOperation<int> GetAdbVersionAsync() => adbClient.GetAdbVersionAsync().AsAsyncOperation();
+        public IAsyncOperation<int> GetAdbVersionAsync() => AsyncInfo.Run(adbClient.GetAdbVersionAsync);
 
         /// <inheritdoc/>
         public void KillAdb() => adbClient.KillAdb();
 
         /// <inheritdoc/>
-        public IAsyncAction KillAdbAsync() => adbClient.KillAdbAsync().AsAsyncAction();
+        public IAsyncAction KillAdbAsync() => AsyncInfo.Run(adbClient.KillAdbAsync);
 
         /// <inheritdoc/>
         public IEnumerable<DeviceData> GetDevices() => adbClient.GetDevices().Select(DeviceData.GetDeviceData);
 
         /// <inheritdoc/>
-        public IAsyncOperation<IEnumerable<DeviceData>> GetDevicesAsync() => Task.Run(async () => (await adbClient.GetDevicesAsync()).Select(DeviceData.GetDeviceData)).AsAsyncOperation();
+        public IAsyncOperation<IEnumerable<DeviceData>> GetDevicesAsync() => AsyncInfo.Run(async (cancellationToken) => (await adbClient.GetDevicesAsync(cancellationToken)).Select(DeviceData.GetDeviceData));
 
         /// <inheritdoc/>
         public int CreateForward(DeviceData device, string local, string remote, bool allowRebind) => adbClient.CreateForward(device.deviceData, local, remote, allowRebind);
 
         /// <inheritdoc/>
-        public IAsyncOperation<int> CreateForwardAsync(DeviceData device, string local, string remote, bool allowRebind) => adbClient.CreateForwardAsync(device.deviceData, local, remote, allowRebind).AsAsyncOperation();
+        public IAsyncOperation<int> CreateForwardAsync(DeviceData device, string local, string remote, bool allowRebind) => AsyncInfo.Run((cancellationToken) => adbClient.CreateForwardAsync(device.deviceData, local, remote, allowRebind, cancellationToken));
 
         /// <inheritdoc/>
         [DefaultOverload]
@@ -130,62 +130,62 @@ namespace AdvancedSharpAdbClient.WinRT
 
         /// <inheritdoc/>
         [DefaultOverload]
-        public IAsyncOperation<int> CreateForwardAsync(DeviceData device, ForwardSpec local, ForwardSpec remote, bool allowRebind) => adbClient.CreateForwardAsync(device.deviceData, local.forwardSpec, remote.forwardSpec, allowRebind).AsAsyncOperation();
+        public IAsyncOperation<int> CreateForwardAsync(DeviceData device, ForwardSpec local, ForwardSpec remote, bool allowRebind) => AsyncInfo.Run((cancellationToken) => adbClient.CreateForwardAsync(device.deviceData, local.forwardSpec, remote.forwardSpec, allowRebind, cancellationToken));
 
         /// <inheritdoc/>
         public int CreateReverseForward(DeviceData device, string remote, string local, bool allowRebind) => adbClient.CreateReverseForward(device.deviceData, remote, local, allowRebind);
-        
+
         /// <inheritdoc/>
-        public IAsyncOperation<int> CreateReverseForwardAsync(DeviceData device, string remote, string local, bool allowRebind) => adbClient.CreateReverseForwardAsync(device.deviceData, remote, local, allowRebind).AsAsyncOperation();
+        public IAsyncOperation<int> CreateReverseForwardAsync(DeviceData device, string remote, string local, bool allowRebind) => AsyncInfo.Run((cancellationToken) => adbClient.CreateReverseForwardAsync(device.deviceData, remote, local, allowRebind, cancellationToken));
 
         /// <inheritdoc/>
         public void RemoveReverseForward(DeviceData device, string remote) => adbClient.RemoveReverseForward(device.deviceData, remote);
 
         /// <inheritdoc/>
-        public IAsyncAction RemoveReverseForwardAsync(DeviceData device, string remote) => adbClient.RemoveReverseForwardAsync(device.deviceData, remote).AsAsyncAction();
+        public IAsyncAction RemoveReverseForwardAsync(DeviceData device, string remote) => AsyncInfo.Run((cancellationToken) => adbClient.RemoveReverseForwardAsync(device.deviceData, remote, cancellationToken));
 
         /// <inheritdoc/>
         public void RemoveAllReverseForwards(DeviceData device) => adbClient.RemoveAllReverseForwards(device.deviceData);
 
 
         /// <inheritdoc/>
-        public IAsyncAction RemoveAllReverseForwardsAsync(DeviceData device)=>adbClient.RemoveAllReverseForwardsAsync(device.deviceData).AsAsyncAction();
+        public IAsyncAction RemoveAllReverseForwardsAsync(DeviceData device) => AsyncInfo.Run((cancellationToken) => adbClient.RemoveAllReverseForwardsAsync(device.deviceData, cancellationToken));
 
         /// <inheritdoc/>
         public void RemoveForward(DeviceData device, int localPort) => adbClient.RemoveForward(device.deviceData, localPort);
 
         /// <inheritdoc/>
-        public IAsyncAction RemoveForwardAsync(DeviceData device, int localPort)=>adbClient.RemoveForwardAsync(device.deviceData, localPort).AsAsyncAction();
+        public IAsyncAction RemoveForwardAsync(DeviceData device, int localPort) => AsyncInfo.Run((cancellationToken) => adbClient.RemoveForwardAsync(device.deviceData, localPort, cancellationToken));
 
         /// <inheritdoc/>
         public void RemoveAllForwards(DeviceData device) => adbClient.RemoveAllForwards(device.deviceData);
 
         /// <inheritdoc/>
-        public IAsyncAction RemoveAllForwardsAsync(DeviceData device) => adbClient.RemoveAllForwardsAsync(device.deviceData).AsAsyncAction();
+        public IAsyncAction RemoveAllForwardsAsync(DeviceData device) => AsyncInfo.Run((cancellationToken) => adbClient.RemoveAllForwardsAsync(device.deviceData, cancellationToken));
 
         /// <inheritdoc/>
         public IEnumerable<ForwardData> ListForward(DeviceData device) => adbClient.ListForward(device.deviceData).Select(ForwardData.GetForwardData);
 
         /// <inheritdoc/>
-        public IAsyncOperation<IEnumerable<ForwardData>> ListForwardAsync(DeviceData device) => Task.Run(async () => (await adbClient.ListForwardAsync(device.deviceData)).Select(ForwardData.GetForwardData)).AsAsyncOperation();
+        public IAsyncOperation<IEnumerable<ForwardData>> ListForwardAsync(DeviceData device) => AsyncInfo.Run(async (cancellationToken) => (await adbClient.ListForwardAsync(device.deviceData, cancellationToken)).Select(ForwardData.GetForwardData));
 
         /// <inheritdoc/>
         public IEnumerable<ForwardData> ListReverseForward(DeviceData device) => adbClient.ListReverseForward(device.deviceData).Select(ForwardData.GetForwardData);
 
         /// <inheritdoc/>
-        public IAsyncOperation<IEnumerable<ForwardData>> ListReverseForwardAsync(DeviceData device) => Task.Run(async () => (await adbClient.ListReverseForwardAsync(device.deviceData)).Select(ForwardData.GetForwardData)).AsAsyncOperation();
+        public IAsyncOperation<IEnumerable<ForwardData>> ListReverseForwardAsync(DeviceData device) => AsyncInfo.Run(async (cancellationToken) => (await adbClient.ListReverseForwardAsync(device.deviceData, cancellationToken)).Select(ForwardData.GetForwardData));
 
         /// <inheritdoc/>
         public void ExecuteRemoteCommand(string command, DeviceData device, IShellOutputReceiver receiver) => adbClient.ExecuteRemoteCommand(command, device.deviceData, WinRTOutputReceiver.GetShellOutputReceiver(receiver));
 
         /// <inheritdoc/>
-        public IAsyncAction ExecuteRemoteCommandAsync(string command, DeviceData device, IShellOutputReceiver receiver) => adbClient.ExecuteRemoteCommandAsync(command, device.deviceData, WinRTOutputReceiver.GetShellOutputReceiver(receiver)).AsAsyncAction();
+        public IAsyncAction ExecuteRemoteCommandAsync(string command, DeviceData device, IShellOutputReceiver receiver) => AsyncInfo.Run((cancellationToken) => adbClient.ExecuteRemoteCommandAsync(command, device.deviceData, WinRTOutputReceiver.GetShellOutputReceiver(receiver), cancellationToken));
 
         /// <inheritdoc/>
         public void ExecuteRemoteCommand(string command, DeviceData device, IShellOutputReceiver receiver, int encoding) => adbClient.ExecuteRemoteCommand(command, device.deviceData, WinRTOutputReceiver.GetShellOutputReceiver(receiver), System.Text.Encoding.GetEncoding(encoding));
 
         /// <inheritdoc/>
-        public IAsyncAction ExecuteRemoteCommandAsync(string command, DeviceData device, IShellOutputReceiver receiver, int encoding) => adbClient.ExecuteRemoteCommandAsync(command, device.deviceData, WinRTOutputReceiver.GetShellOutputReceiver(receiver), System.Text.Encoding.GetEncoding(encoding)).AsAsyncAction();
+        public IAsyncAction ExecuteRemoteCommandAsync(string command, DeviceData device, IShellOutputReceiver receiver, int encoding) => AsyncInfo.Run((cancellationToken) => adbClient.ExecuteRemoteCommandAsync(command, device.deviceData, WinRTOutputReceiver.GetShellOutputReceiver(receiver), System.Text.Encoding.GetEncoding(encoding), cancellationToken));
 
         /// <inheritdoc/>
         public Framebuffer CreateRefreshableFramebuffer(DeviceData device) => Framebuffer.GetFramebuffer(adbClient.CreateRefreshableFramebuffer(device.deviceData));
@@ -194,49 +194,49 @@ namespace AdvancedSharpAdbClient.WinRT
         public Framebuffer GetFrameBuffer(DeviceData device) => Framebuffer.GetFramebuffer(adbClient.GetFrameBuffer(device.deviceData));
 
         /// <inheritdoc/>
-        public IAsyncOperation<Framebuffer> GetFrameBufferAsync(DeviceData device) => Task.Run(async () => Framebuffer.GetFramebuffer(await adbClient.GetFrameBufferAsync(device.deviceData))).AsAsyncOperation();
+        public IAsyncOperation<Framebuffer> GetFrameBufferAsync(DeviceData device) => AsyncInfo.Run(async (cancellationToken) => Framebuffer.GetFramebuffer(await adbClient.GetFrameBufferAsync(device.deviceData, cancellationToken)));
 
         /// <inheritdoc/>
         public void RunLogService(DeviceData device, MessageSink messageSink, [ReadOnlyArray] params LogId[] logNames) => adbClient.RunLogService(device.deviceData, (logEntry) => messageSink(LogEntry.GetLogEntry(logEntry)), logNames.Cast<AdvancedSharpAdbClient.Logs.LogId>().ToArray());
 
         /// <inheritdoc/>
-        public IAsyncAction RunLogServiceAsync(DeviceData device, MessageSink messageSink, [ReadOnlyArray] params LogId[] logNames) => adbClient.RunLogServiceAsync(device.deviceData, (logEntry) => messageSink(LogEntry.GetLogEntry(logEntry)), logNames.Cast<AdvancedSharpAdbClient.Logs.LogId>().ToArray()).AsAsyncAction();
+        public IAsyncAction RunLogServiceAsync(DeviceData device, MessageSink messageSink, [ReadOnlyArray] params LogId[] logNames) => AsyncInfo.Run((cancellationToken) => adbClient.RunLogServiceAsync(device.deviceData, (logEntry) => messageSink(LogEntry.GetLogEntry(logEntry)), cancellationToken, logNames.Cast<AdvancedSharpAdbClient.Logs.LogId>().ToArray()));
 
         /// <inheritdoc/>
         public void Reboot(DeviceData device) => adbClient.Reboot(device.deviceData);
 
         /// <inheritdoc/>
-        public IAsyncAction RebootAsync(DeviceData device) => adbClient.RebootAsync(device.deviceData).AsAsyncAction();
+        public IAsyncAction RebootAsync(DeviceData device) => AsyncInfo.Run((cancellationToken) => adbClient.RebootAsync(device.deviceData, cancellationToken));
 
         /// <inheritdoc/>
         public void Reboot(string into, DeviceData device) => adbClient.Reboot(into, device.deviceData);
 
         /// <inheritdoc/>
-        public IAsyncAction RebootAsync(string into, DeviceData device) => adbClient.RebootAsync(into, device.deviceData).AsAsyncAction();
+        public IAsyncAction RebootAsync(string into, DeviceData device) => AsyncInfo.Run((cancellationToken) => adbClient.RebootAsync(into, device.deviceData, cancellationToken));
 
         /// <inheritdoc/>
         public string Pair(string host, string code) => adbClient.Pair(host, code);
 
         /// <inheritdoc/>
-        public IAsyncOperation<string> PairAsync(string host, string code) => adbClient.PairAsync(host, code).AsAsyncOperation();
+        public IAsyncOperation<string> PairAsync(string host, string code) => AsyncInfo.Run((cancellationToken) => adbClient.PairAsync(host, code, cancellationToken));
 
         /// <inheritdoc/>
         public string Pair(string host, int port, string code) => adbClient.Pair(host, port, code);
 
         /// <inheritdoc/>
-        public IAsyncOperation<string> PairAsync(string host, int port, string code) => adbClient.PairAsync(host, port, code).AsAsyncOperation();
+        public IAsyncOperation<string> PairAsync(string host, int port, string code) => AsyncInfo.Run((cancellationToken) => adbClient.PairAsync(host, port, code, cancellationToken));
 
         /// <inheritdoc/>
         public string Connect(string host) => adbClient.Connect(host);
 
         /// <inheritdoc/>
-        public IAsyncOperation<string> ConnectAsync(string host) => adbClient.ConnectAsync(host).AsAsyncOperation();
+        public IAsyncOperation<string> ConnectAsync(string host) => AsyncInfo.Run((cancellationToken) => adbClient.ConnectAsync(host, cancellationToken: cancellationToken));
 
         /// <inheritdoc/>
         public string Connect(string host, int port) => adbClient.Connect(host, port);
 
         /// <inheritdoc/>
-        public IAsyncOperation<string> ConnectAsync(string host, int port) => adbClient.ConnectAsync(host, port).AsAsyncOperation();
+        public IAsyncOperation<string> ConnectAsync(string host, int port) => AsyncInfo.Run((cancellationToken) => adbClient.ConnectAsync(host, port, cancellationToken));
 
         /// <inheritdoc/>
         public string Disconnect(string host) => Disconnect(host, AdvancedSharpAdbClient.AdbClient.DefaultPort);
@@ -271,44 +271,44 @@ namespace AdvancedSharpAdbClient.WinRT
 
             return values.Length <= 0
                 ? throw new ArgumentNullException(nameof(host))
-                : adbClient.DisconnectAsync(new DnsEndPoint(values[0], values.Length > 1 && int.TryParse(values[1], out int _port) ? _port : port)).AsAsyncOperation();
+                : AsyncInfo.Run((cancellationToken) => adbClient.DisconnectAsync(new DnsEndPoint(values[0], values.Length > 1 && int.TryParse(values[1], out int _port) ? _port : port), cancellationToken));
         }
 
         /// <inheritdoc/>
         public void Root(DeviceData device) => adbClient.Root(device.deviceData);
 
         /// <inheritdoc/>
-        public IAsyncAction RootAsync(DeviceData device) => adbClient.RootAsync(device.deviceData).AsAsyncAction();
+        public IAsyncAction RootAsync(DeviceData device) => AsyncInfo.Run((cancellationToken) => adbClient.RootAsync(device.deviceData, cancellationToken));
 
         /// <inheritdoc/>
         public void Unroot(DeviceData device) => adbClient.Unroot(device.deviceData);
 
         /// <inheritdoc/>
-        public IAsyncAction UnrootAsync(DeviceData device) => adbClient.UnrootAsync(device.deviceData).AsAsyncAction();
+        public IAsyncAction UnrootAsync(DeviceData device) => AsyncInfo.Run((cancellationToken) => adbClient.UnrootAsync(device.deviceData, cancellationToken));
 
         /// <inheritdoc/>
         public void Install(DeviceData device, IInputStream apk) => adbClient.Install(device.deviceData, apk.AsStreamForRead());
 
         /// <inheritdoc/>
-        public IAsyncAction InstallAsync(DeviceData device, IInputStream apk) => adbClient.InstallAsync(device.deviceData, apk.AsStreamForRead()).AsAsyncAction();
+        public IAsyncAction InstallAsync(DeviceData device, IInputStream apk) => AsyncInfo.Run((cancellationToken) => adbClient.InstallAsync(device.deviceData, apk.AsStreamForRead(), cancellationToken));
 
         /// <inheritdoc/>
         public void Install(DeviceData device, IInputStream apk, [ReadOnlyArray] params string[] arguments) => adbClient.Install(device.deviceData, apk.AsStreamForRead(), arguments);
 
         /// <inheritdoc/>
-        public IAsyncAction InstallAsync(DeviceData device, IInputStream apk, [ReadOnlyArray] params string[] arguments) => adbClient.InstallAsync(device.deviceData, apk.AsStreamForRead(), arguments).AsAsyncAction();
+        public IAsyncAction InstallAsync(DeviceData device, IInputStream apk, [ReadOnlyArray] params string[] arguments) => AsyncInfo.Run((cancellationToken) => adbClient.InstallAsync(device.deviceData, apk.AsStreamForRead(), cancellationToken, arguments));
 
         /// <inheritdoc/>
         public void InstallMultiple(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName) => adbClient.InstallMultiple(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()), packageName);
 
         /// <inheritdoc/>
-        public IAsyncAction InstallMultipleAsync(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName) => adbClient.InstallMultipleAsync(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()), packageName).AsAsyncAction();
+        public IAsyncAction InstallMultipleAsync(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName) => AsyncInfo.Run((cancellationToken) => adbClient.InstallMultipleAsync(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()), packageName, cancellationToken));
 
         /// <inheritdoc/>
         public void InstallMultiple(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName, [ReadOnlyArray] params string[] arguments) => adbClient.InstallMultiple(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()), packageName, arguments);
 
         /// <inheritdoc/>
-        public IAsyncAction InstallMultipleAsync(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName, [ReadOnlyArray] params string[] arguments) => adbClient.InstallMultipleAsync(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()), packageName, arguments).AsAsyncAction();
+        public IAsyncAction InstallMultipleAsync(DeviceData device, IEnumerable<IInputStream> splitAPKs, string packageName, [ReadOnlyArray] params string[] arguments) => AsyncInfo.Run((cancellationToken) => adbClient.InstallMultipleAsync(device.deviceData, splitAPKs.Select((x) => x.AsStreamForRead()), packageName, cancellationToken, arguments));
 
         /// <inheritdoc/>
         [DefaultOverload]
@@ -316,7 +316,7 @@ namespace AdvancedSharpAdbClient.WinRT
 
         /// <inheritdoc/>
         [DefaultOverload]
-        public IAsyncAction InstallMultipleAsync(DeviceData device, IInputStream baseAPK, IEnumerable<IInputStream> splitAPKs) => adbClient.InstallMultipleAsync(device.deviceData, baseAPK.AsStreamForRead(), splitAPKs.Select((x) => x.AsStreamForRead())).AsAsyncAction();
+        public IAsyncAction InstallMultipleAsync(DeviceData device, IInputStream baseAPK, IEnumerable<IInputStream> splitAPKs) => AsyncInfo.Run((cancellationToken) => adbClient.InstallMultipleAsync(device.deviceData, baseAPK.AsStreamForRead(), splitAPKs.Select((x) => x.AsStreamForRead()), cancellationToken));
 
         /// <inheritdoc/>
         [DefaultOverload]
@@ -324,19 +324,19 @@ namespace AdvancedSharpAdbClient.WinRT
 
         /// <inheritdoc/>
         [DefaultOverload]
-        public IAsyncAction InstallMultipleAsync(DeviceData device, IInputStream baseAPK, IEnumerable<IInputStream> splitAPKs, [ReadOnlyArray] params string[] arguments) => adbClient.InstallMultipleAsync(device.deviceData, baseAPK.AsStreamForRead(), splitAPKs.Select((x) => x.AsStreamForRead()), arguments).AsAsyncAction();
+        public IAsyncAction InstallMultipleAsync(DeviceData device, IInputStream baseAPK, IEnumerable<IInputStream> splitAPKs, [ReadOnlyArray] params string[] arguments) => AsyncInfo.Run((cancellationToken) => adbClient.InstallMultipleAsync(device.deviceData, baseAPK.AsStreamForRead(), splitAPKs.Select((x) => x.AsStreamForRead()), cancellationToken, arguments));
 
         /// <inheritdoc/>
         public string InstallCreate(DeviceData device) => adbClient.InstallCreate(device.deviceData);
 
         /// <inheritdoc/>
-        public IAsyncOperation<string> InstallCreateAsync(DeviceData device) => adbClient.InstallCreateAsync(device.deviceData).AsAsyncOperation();
+        public IAsyncOperation<string> InstallCreateAsync(DeviceData device) => AsyncInfo.Run((cancellationToken) => adbClient.InstallCreateAsync(device.deviceData, null, cancellationToken));
 
         /// <inheritdoc/>
         public string InstallCreate(DeviceData device, [ReadOnlyArray] params string[] arguments) => adbClient.InstallCreate(device.deviceData, arguments: arguments);
 
         /// <inheritdoc/>
-        public IAsyncOperation<string> InstallCreateAsync(DeviceData device, [ReadOnlyArray] params string[] arguments) => adbClient.InstallCreateAsync(device.deviceData, arguments: arguments).AsAsyncOperation();
+        public IAsyncOperation<string> InstallCreateAsync(DeviceData device, [ReadOnlyArray] params string[] arguments) => AsyncInfo.Run((cancellationToken) => adbClient.InstallCreateAsync(device.deviceData, null, cancellationToken, arguments));
 
         /// <inheritdoc/>
         [DefaultOverload]
@@ -344,85 +344,85 @@ namespace AdvancedSharpAdbClient.WinRT
 
         /// <inheritdoc/>
         [DefaultOverload]
-        public IAsyncOperation<string> InstallCreateAsync(DeviceData device, string packageName) => adbClient.InstallCreateAsync(device.deviceData, packageName).AsAsyncOperation();
+        public IAsyncOperation<string> InstallCreateAsync(DeviceData device, string packageName) => AsyncInfo.Run((cancellationToken) => adbClient.InstallCreateAsync(device.deviceData, packageName, cancellationToken));
 
         /// <inheritdoc/>
         public string InstallCreate(DeviceData device, string packageName, [ReadOnlyArray] params string[] arguments) => adbClient.InstallCreate(device.deviceData, packageName, arguments);
 
         /// <inheritdoc/>
-        public IAsyncOperation<string> InstallCreateAsync(DeviceData device, string packageName, [ReadOnlyArray] params string[] arguments) => adbClient.InstallCreateAsync(device.deviceData, packageName, arguments).AsAsyncOperation();
+        public IAsyncOperation<string> InstallCreateAsync(DeviceData device, string packageName, [ReadOnlyArray] params string[] arguments) => AsyncInfo.Run((cancellationToken) => adbClient.InstallCreateAsync(device.deviceData, packageName, cancellationToken, arguments));
 
         /// <inheritdoc/>
         public void InstallWrite(DeviceData device, IInputStream apk, string apkName, string session) => adbClient.InstallWrite(device.deviceData, apk.AsStreamForRead(), apkName, session);
 
         /// <inheritdoc/>
-        public IAsyncAction InstallWriteAsync(DeviceData device, IInputStream apk, string apkName, string session) => adbClient.InstallWriteAsync(device.deviceData, apk.AsStreamForRead(), apkName, session).AsAsyncAction();
+        public IAsyncAction InstallWriteAsync(DeviceData device, IInputStream apk, string apkName, string session) => AsyncInfo.Run((cancellationToken) => adbClient.InstallWriteAsync(device.deviceData, apk.AsStreamForRead(), apkName, session, cancellationToken));
 
         /// <inheritdoc/>
         public void InstallCommit(DeviceData device, string session) => adbClient.InstallCommit(device.deviceData, session);
 
         /// <inheritdoc/>
-        public IAsyncAction InstallCommitAsync(DeviceData device, string session) => adbClient.InstallCommitAsync(device.deviceData, session).AsAsyncAction();
+        public IAsyncAction InstallCommitAsync(DeviceData device, string session) => AsyncInfo.Run((cancellationToken) => adbClient.InstallCommitAsync(device.deviceData, session, cancellationToken));
 
         /// <inheritdoc/>
         public IEnumerable<string> GetFeatureSet(DeviceData device) => adbClient.GetFeatureSet(device.deviceData);
 
         /// <inheritdoc/>
-        public IAsyncOperation<IEnumerable<string>> GetFeatureSetAsync(DeviceData device) => adbClient.GetFeatureSetAsync(device.deviceData).AsAsyncOperation();
+        public IAsyncOperation<IEnumerable<string>> GetFeatureSetAsync(DeviceData device) => AsyncInfo.Run((cancellationToken) => adbClient.GetFeatureSetAsync(device.deviceData, cancellationToken));
 
         /// <inheritdoc/>
         public string DumpScreenString(DeviceData device) => adbClient.DumpScreenString(device.deviceData);
 
         /// <inheritdoc/>
-        public IAsyncOperation<string> DumpScreenStringAsync(DeviceData device) => adbClient.DumpScreenStringAsync(device.deviceData).AsAsyncOperation();
+        public IAsyncOperation<string> DumpScreenStringAsync(DeviceData device) => AsyncInfo.Run((cancellationToken) => adbClient.DumpScreenStringAsync(device.deviceData, cancellationToken));
 
         /// <inheritdoc/>
         public XmlDocument DumpScreen(DeviceData device) => adbClient.DumpScreenWinRT(device.deviceData);
 
         /// <inheritdoc/>
-        public IAsyncOperation<XmlDocument> DumpScreenAsync(DeviceData device) => adbClient.DumpScreenWinRTAsync(device.deviceData).AsAsyncOperation();
+        public IAsyncOperation<XmlDocument> DumpScreenAsync(DeviceData device) => AsyncInfo.Run((cancellationToken) => adbClient.DumpScreenWinRTAsync(device.deviceData, cancellationToken));
 
         /// <inheritdoc/>
         public void Click(DeviceData device, Cords cords) => adbClient.Click(device.deviceData, cords.cords);
 
         /// <inheritdoc/>
-        public IAsyncAction ClickAsync(DeviceData device, Cords cords) => adbClient.ClickAsync(device.deviceData, cords.cords).AsAsyncAction();
+        public IAsyncAction ClickAsync(DeviceData device, Cords cords) => AsyncInfo.Run((cancellationToken) => adbClient.ClickAsync(device.deviceData, cords.cords, cancellationToken));
 
         /// <inheritdoc/>
         public void Click(DeviceData device, int x, int y) => adbClient.Click(device.deviceData, x, y);
 
         /// <inheritdoc/>
-        public IAsyncAction ClickAsync(DeviceData device, int x, int y) => adbClient.ClickAsync(device.deviceData, x, y).AsAsyncAction();
+        public IAsyncAction ClickAsync(DeviceData device, int x, int y) => AsyncInfo.Run((cancellationToken) => adbClient.ClickAsync(device.deviceData, x, y, cancellationToken));
 
         /// <inheritdoc/>
         public void Swipe(DeviceData device, Element first, Element second, long speed) => adbClient.Swipe(device.deviceData, first.element, second.element, speed);
 
         /// <inheritdoc/>
-        public IAsyncAction SwipeAsync(DeviceData device, Element first, Element second, long speed) => adbClient.SwipeAsync(device.deviceData, first.element, second.element, speed).AsAsyncAction();
+        public IAsyncAction SwipeAsync(DeviceData device, Element first, Element second, long speed) => AsyncInfo.Run((cancellationToken) => adbClient.SwipeAsync(device.deviceData, first.element, second.element, speed, cancellationToken));
 
         /// <inheritdoc/>
         public void Swipe(DeviceData device, int x1, int y1, int x2, int y2, long speed) => adbClient.Swipe(device.deviceData, x1, y1, x2, y2, speed);
 
         /// <inheritdoc/>
-        public IAsyncAction SwipeAsync(DeviceData device, int x1, int y1, int x2, int y2, long speed) => adbClient.SwipeAsync(device.deviceData, x1, y1, x2, y2, speed).AsAsyncAction();
+        public IAsyncAction SwipeAsync(DeviceData device, int x1, int y1, int x2, int y2, long speed) => AsyncInfo.Run((cancellationToken) => adbClient.SwipeAsync(device.deviceData, x1, y1, x2, y2, speed, cancellationToken));
 
         /// <inheritdoc/>
         public bool IsCurrentApp(DeviceData device, string packageName) => adbClient.IsCurrentApp(device.deviceData, packageName);
 
         /// <inheritdoc/>
-        public IAsyncOperation<bool> IsCurrentAppAsync(DeviceData device, string packageName) => adbClient.IsCurrentAppAsync(device.deviceData, packageName).AsAsyncOperation();
+        public IAsyncOperation<bool> IsCurrentAppAsync(DeviceData device, string packageName) => AsyncInfo.Run((cancellationToken) => adbClient.IsCurrentAppAsync(device.deviceData, packageName, cancellationToken));
 
         /// <inheritdoc/>
         public bool IsAppRunning(DeviceData device, string packageName) => adbClient.IsAppRunning(device.deviceData, packageName);
 
         /// <inheritdoc/>
-        public IAsyncOperation<bool> IsAppRunningAsync(DeviceData device, string packageName) => adbClient.IsAppRunningAsync(device.deviceData, packageName).AsAsyncOperation();
+        public IAsyncOperation<bool> IsAppRunningAsync(DeviceData device, string packageName) => AsyncInfo.Run((cancellationToken) => adbClient.IsAppRunningAsync(device.deviceData, packageName, cancellationToken));
 
         /// <inheritdoc/>
         public AppStatus GetAppStatus(DeviceData device, string packageName) => (AppStatus)adbClient.GetAppStatus(device.deviceData, packageName);
 
         /// <inheritdoc/>
-        public IAsyncOperation<AppStatus> GetAppStatusAsync(DeviceData device, string packageName) => Task.Run(async () => (AppStatus)await adbClient.GetAppStatusAsync(device.deviceData, packageName)).AsAsyncOperation();
+        public IAsyncOperation<AppStatus> GetAppStatusAsync(DeviceData device, string packageName) => AsyncInfo.Run(async (cancellationToken) => (AppStatus)await adbClient.GetAppStatusAsync(device.deviceData, packageName, cancellationToken));
 
         /// <inheritdoc/>
         public Element FindElement(DeviceData device, string xpath) => Element.GetElement(adbClient.FindElement(device.deviceData, xpath));
@@ -452,31 +452,31 @@ namespace AdvancedSharpAdbClient.WinRT
         public void SendKeyEvent(DeviceData device, string key) => adbClient.SendKeyEvent(device.deviceData, key);
 
         /// <inheritdoc/>
-        public IAsyncAction SendKeyEventAsync(DeviceData device, string key) => adbClient.SendKeyEventAsync(device.deviceData, key).AsAsyncAction();
+        public IAsyncAction SendKeyEventAsync(DeviceData device, string key) => AsyncInfo.Run((cancellationToken) => adbClient.SendKeyEventAsync(device.deviceData, key, cancellationToken));
 
         /// <inheritdoc/>
         public void SendText(DeviceData device, string text) => adbClient.SendText(device.deviceData, text);
 
         /// <inheritdoc/>
-        public IAsyncAction SendTextAsync(DeviceData device, string text) => adbClient.SendTextAsync(device.deviceData, text).AsAsyncAction();
+        public IAsyncAction SendTextAsync(DeviceData device, string text) => AsyncInfo.Run((cancellationToken) => adbClient.SendTextAsync(device.deviceData, text, cancellationToken));
 
         /// <inheritdoc/>
         public void ClearInput(DeviceData device, int charCount) => adbClient.ClearInput(device.deviceData, charCount);
 
         /// <inheritdoc/>
-        public IAsyncAction ClearInputAsync(DeviceData device, int charCount) => adbClient.ClearInputAsync(device.deviceData, charCount).AsAsyncAction();
+        public IAsyncAction ClearInputAsync(DeviceData device, int charCount) => AsyncInfo.Run((cancellationToken) => adbClient.ClearInputAsync(device.deviceData, charCount, cancellationToken));
 
         /// <inheritdoc/>
         public void StartApp(DeviceData device, string packageName) => adbClient.StartApp(device.deviceData, packageName);
 
         /// <inheritdoc/>
-        public IAsyncAction StartAppAsync(DeviceData device, string packageName) => adbClient.StartAppAsync(device.deviceData, packageName).AsAsyncAction();
+        public IAsyncAction StartAppAsync(DeviceData device, string packageName) => AsyncInfo.Run((cancellationToken) => adbClient.StartAppAsync(device.deviceData, packageName, cancellationToken));
 
         /// <inheritdoc/>
         public void StopApp(DeviceData device, string packageName) => adbClient.StopApp(device.deviceData, packageName);
 
         /// <inheritdoc/>
-        public IAsyncAction StopAppAsync(DeviceData device, string packageName) => adbClient.StopAppAsync(device.deviceData, packageName).AsAsyncAction();
+        public IAsyncAction StopAppAsync(DeviceData device, string packageName) => AsyncInfo.Run((cancellationToken) => adbClient.StopAppAsync(device.deviceData, packageName, cancellationToken));
 
         /// <inheritdoc/>
         public void BackBtn(DeviceData device) => adbClient.BackBtn(device.deviceData);
@@ -491,60 +491,46 @@ namespace AdvancedSharpAdbClient.WinRT
         public IAsyncAction HomeBtnAsync(DeviceData device) => adbClient.HomeBtnAsync(device.deviceData).AsAsyncAction();
 
         /// <inheritdoc/>
-        public void ExecuteShellCommand(DeviceData device, string command, IShellOutputReceiver receiver) =>
-            ExecuteRemoteCommand(command, device, receiver);
+        public void ExecuteShellCommand(DeviceData device, string command, IShellOutputReceiver receiver) => ExecuteRemoteCommand(command, device, receiver);
 
         /// <inheritdoc/>
-        public IAsyncAction ExecuteShellCommandAsync(DeviceData device, string command, IShellOutputReceiver receiver) =>
-            ExecuteRemoteCommandAsync(command, device, receiver);
+        public IAsyncAction ExecuteShellCommandAsync(DeviceData device, string command, IShellOutputReceiver receiver) => ExecuteRemoteCommandAsync(command, device, receiver);
 
         /// <inheritdoc/>
-        public string GetProperty(DeviceData device, string property) =>
-            adbClient.GetProperty(device.deviceData, property);
+        public string GetProperty(DeviceData device, string property) => adbClient.GetProperty(device.deviceData, property);
 
         /// <inheritdoc/>
-        public IAsyncOperation<string> GetPropertyAsync(DeviceData device, string property) =>
-            adbClient.GetPropertyAsync(device.deviceData, property).AsAsyncOperation();
+        public IAsyncOperation<string> GetPropertyAsync(DeviceData device, string property) => AsyncInfo.Run((cancellationToken) => adbClient.GetPropertyAsync(device.deviceData, property, cancellationToken));
 
         /// <inheritdoc/>
-        public IDictionary<string, string> GetProperties(DeviceData device) =>
-            adbClient.GetProperties(device.deviceData);
+        public IDictionary<string, string> GetProperties(DeviceData device) => adbClient.GetProperties(device.deviceData);
 
         /// <inheritdoc/>
-        public IAsyncOperation<IDictionary<string, string>> GetPropertiesAsync(DeviceData device) =>
-            Task.Run(async () => await adbClient.GetPropertiesAsync(device.deviceData) as IDictionary<string, string>).AsAsyncOperation();
+        public IAsyncOperation<IDictionary<string, string>> GetPropertiesAsync(DeviceData device) => AsyncInfo.Run(async (cancellationToken) => await adbClient.GetPropertiesAsync(device.deviceData, cancellationToken) as IDictionary<string, string>);
 
         /// <inheritdoc/>
-        public IDictionary<string, string> GetEnvironmentVariables(DeviceData device) =>
-            adbClient.GetEnvironmentVariables(device.deviceData);
+        public IDictionary<string, string> GetEnvironmentVariables(DeviceData device) => adbClient.GetEnvironmentVariables(device.deviceData);
 
         /// <inheritdoc/>
-        public IAsyncOperation<IDictionary<string, string>> GetEnvironmentVariablesAsync(DeviceData device) =>
-            Task.Run(async () => await adbClient.GetEnvironmentVariablesAsync(device.deviceData) as IDictionary<string, string>).AsAsyncOperation();
+        public IAsyncOperation<IDictionary<string, string>> GetEnvironmentVariablesAsync(DeviceData device) => AsyncInfo.Run(async (cancellationToken) => await adbClient.GetEnvironmentVariablesAsync(device.deviceData, cancellationToken) as IDictionary<string, string>);
 
         /// <inheritdoc/>
-        public void UninstallPackage(DeviceData device, string packageName) =>
-            adbClient.UninstallPackage(device.deviceData, packageName);
+        public void UninstallPackage(DeviceData device, string packageName) => adbClient.UninstallPackage(device.deviceData, packageName);
 
         /// <inheritdoc/>
-        public IAsyncAction UninstallPackageAsync(DeviceData device, string packageName) =>
-            adbClient.UninstallPackageAsync(device.deviceData, packageName).AsAsyncAction();
+        public IAsyncAction UninstallPackageAsync(DeviceData device, string packageName) => AsyncInfo.Run((cancellationToken) => adbClient.UninstallPackageAsync(device.deviceData, packageName, cancellationToken));
 
         /// <inheritdoc/>
-        public VersionInfo GetPackageVersion(DeviceData device, string packageName) =>
-            VersionInfo.GetVersionInfo(adbClient.GetPackageVersion(device.deviceData, packageName));
+        public VersionInfo GetPackageVersion(DeviceData device, string packageName) => VersionInfo.GetVersionInfo(adbClient.GetPackageVersion(device.deviceData, packageName));
 
         /// <inheritdoc/>
-        public IAsyncOperation<VersionInfo> GetPackageVersionAsync(DeviceData device, string packageName) =>
-            Task.Run(async () => VersionInfo.GetVersionInfo(await adbClient.GetPackageVersionAsync(device.deviceData, packageName))).AsAsyncOperation();
+        public IAsyncOperation<VersionInfo> GetPackageVersionAsync(DeviceData device, string packageName) => AsyncInfo.Run(async (cancellationToken) => VersionInfo.GetVersionInfo(await adbClient.GetPackageVersionAsync(device.deviceData, packageName, cancellationToken)));
 
         /// <inheritdoc/>
-        public IEnumerable<AndroidProcess> ListProcesses(DeviceData device) =>
-            adbClient.ListProcesses(device.deviceData).Select(AndroidProcess.GetAndroidProcess);
+        public IEnumerable<AndroidProcess> ListProcesses(DeviceData device) => adbClient.ListProcesses(device.deviceData).Select(AndroidProcess.GetAndroidProcess);
 
         /// <inheritdoc/>
-        public IAsyncOperation<IEnumerable<AndroidProcess>> ListProcessesAsync(DeviceData device) =>
-            Task.Run(async () => (await adbClient.ListProcessesAsync(device.deviceData)).Select(AndroidProcess.GetAndroidProcess)).AsAsyncOperation();
+        public IAsyncOperation<IEnumerable<AndroidProcess>> ListProcessesAsync(DeviceData device) => AsyncInfo.Run(async (cancellationToken) => (await adbClient.ListProcessesAsync(device.deviceData, cancellationToken)).Select(AndroidProcess.GetAndroidProcess));
 
         /// <summary>
         /// Sets default encoding (default - UTF8)

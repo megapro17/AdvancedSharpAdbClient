@@ -6,6 +6,7 @@ using AdvancedSharpAdbClient.WinRT.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 
 namespace AdvancedSharpAdbClient.WinRT
@@ -64,7 +65,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// Clicks on this coordinates.
         /// </summary>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction ClickAsync() => element.ClickAsync().AsAsyncAction();
+        public IAsyncAction ClickAsync() => AsyncInfo.Run(element.ClickAsync);
 
         /// <summary>
         /// Send text to device. Doesn't support Russian.
@@ -77,7 +78,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         /// <param name="text">The text to send.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction SendTextAsync(string text) => element.SendTextAsync(text).AsAsyncAction();
+        public IAsyncAction SendTextAsync(string text) => AsyncInfo.Run((cancellationToken) => element.SendTextAsync(text, cancellationToken));
 
         /// <summary>
         /// Clear the input text. Use <see cref="IAdbClient.ClearInput(DeviceData, int)"/> if the element is focused.
@@ -85,10 +86,10 @@ namespace AdvancedSharpAdbClient.WinRT
         public void ClearInput() => element.ClearInput();
 
         /// <summary>
-        /// Clear the input text. Use <see cref="IAdbClient.ClearInputAsync(DeviceData, int)"/> if the element is focused.
+        /// Clear the input text. Use <see cref="IAdbClientAsync.ClearInputAsync(DeviceData, int)"/> if the element is focused.
         /// </summary>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction ClearInputAsync() => element.ClearInputAsync().AsAsyncAction();
+        public IAsyncAction ClearInputAsync() => AsyncInfo.Run((cancellationToken) => element.ClearInputAsync(cancellationToken: cancellationToken));
 
         /// <summary>
         /// Clear the input text. Use <see cref="IAdbClient.ClearInput(DeviceData, int)"/> if the element is focused.
@@ -97,10 +98,10 @@ namespace AdvancedSharpAdbClient.WinRT
         public void ClearInput(int charCount) => element.ClearInput(charCount);
 
         /// <summary>
-        /// Clear the input text. Use <see cref="IAdbClient.ClearInputAsync(DeviceData, int)"/> if the element is focused.
+        /// Clear the input text. Use <see cref="IAdbClientAsync.ClearInputAsync(DeviceData, int)"/> if the element is focused.
         /// </summary>
         /// <param name="charCount">The length of text to clear.</param>
         /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
-        public IAsyncAction ClearInputAsync(int charCount) => element.ClearInputAsync(charCount).AsAsyncAction();
+        public IAsyncAction ClearInputAsync(int charCount) => AsyncInfo.Run((cancellationToken) => element.ClearInputAsync(charCount, cancellationToken));
     }
 }
