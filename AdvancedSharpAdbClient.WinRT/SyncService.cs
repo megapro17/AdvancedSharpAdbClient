@@ -75,7 +75,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Gets the <see cref="AdbSocket"/> that enables the connection with the adb server.
         /// </summary>
-        public AdbSocket Socket { get; }
+        public AdbSocket Socket => syncService.Socket is AdvancedSharpAdbClient.AdbSocket adbSocket ? new(adbSocket) : null;
 
         /// <inheritdoc/>
         public bool IsOpen => syncService.IsOpen;

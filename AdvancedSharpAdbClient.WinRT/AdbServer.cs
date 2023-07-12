@@ -1,5 +1,8 @@
 ﻿using AdvancedSharpAdbClient.WinRT.Extensions;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.ApplicationModel;
+using Windows.Foundation;
 
 namespace AdvancedSharpAdbClient.WinRT
 {
@@ -16,7 +19,7 @@ namespace AdvancedSharpAdbClient.WinRT
     /// between clients and devices.
     /// </para>
     /// </summary>
-    public sealed class AdbServer : IAdbServer
+    public sealed class AdbServer : IAdbServer, IAdbServerAsync
     {
         internal readonly AdvancedSharpAdbClient.AdbServer adbServer;
 
@@ -39,9 +42,24 @@ namespace AdvancedSharpAdbClient.WinRT
         public StartServerResult StartServer(string adbPath, bool restartServerIfNewer) => (StartServerResult)adbServer.StartServer(adbPath, restartServerIfNewer);
 
         /// <inheritdoc/>
-        public void RestartServer() => adbServer.RestartServer();
+        public IAsyncOperation<StartServerResult> StartServerAsync(string adbPath, bool restartServerIfNewer) => AsyncInfo.Run(async (cancellationToken) => (StartServerResult)await adbServer.StartServerAsync(adbPath, restartServerIfNewer, cancellationToken));
+
+        /// <inheritdoc/>
+        public StartServerResult RestartServer() => (StartServerResult)adbServer.RestartServer();
+
+        /// <inheritdoc/>
+        public IAsyncOperation<StartServerResult> RestartServerAsync() => AsyncInfo.Run(async (cancellationToken) => (StartServerResult)await adbServer.RestartServerAsync(cancellationToken));
+
+        /// <inheritdoc/>
+        public StartServerResult RestartServer(string adbPath) => (StartServerResult)adbServer.RestartServer(adbPath);
+
+        /// <inheritdoc/>
+        public IAsyncOperation<StartServerResult> RestartServerAsync(string adbPath) => AsyncInfo.Run(async (cancellationToken) => (StartServerResult)await adbServer.RestartServerAsync(adbPath, cancellationToken));
 
         /// <inheritdoc/>
         public AdbServerStatus GetStatus() => AdbServerStatus.GetAdbServerStatus(adbServer.GetStatus());
+
+        /// <inheritdoc/>
+        public IAsyncOperation<AdbServerStatus> GetStatusAsync() => AsyncInfo.Run(async (cancellationToken) => AdbServerStatus.GetAdbServerStatus(await adbServer.GetStatusAsync(cancellationToken)));
     }
 }

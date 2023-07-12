@@ -2,7 +2,9 @@
 // Copyright (c) The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere. All rights reserved.
 // </copyright>
 
+using System;
 using System.IO;
+using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
@@ -23,6 +25,38 @@ namespace AdvancedSharpAdbClient.WinRT
     public sealed class AdbSocket : IAdbSocket, IAdbSocketAsync
     {
         internal readonly AdvancedSharpAdbClient.AdbSocket adbSocket;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdbSocket"/> class.
+        /// </summary>
+        /// <param name="host">The host address at which the Android Debug Bridge is listening for clients.</param>
+        /// <param name="port">The port at which the Android Debug Bridge is listening for clients.</param>
+        public AdbSocket(string host, int port)
+        {
+            if (string.IsNullOrEmpty(host))
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
+
+            string[] values = host.Split(':');
+
+            DnsEndPoint EndPoint = values.Length <= 0
+                ? throw new ArgumentNullException(nameof(host))
+                : new DnsEndPoint(values[0], values.Length > 1 && int.TryParse(values[1], out int _port) ? _port : port);
+
+            adbSocket = new(EndPoint);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdbSocket"/> class.
+        /// </summary>
+        /// <param name="socket">The <see cref="TcpSocket"/> at which the Android Debug Bridge is listening for clients.</param>
+        public AdbSocket(TcpSocket socket) => adbSocket = new(socket.tcpSocket);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdbSocket"/> class.
+        /// </summary>
+        internal AdbSocket(AdvancedSharpAdbClient.AdbSocket adbSocket) => this.adbSocket = adbSocket;
 
         /// <summary>
         /// Gets or sets the size of the receive buffer

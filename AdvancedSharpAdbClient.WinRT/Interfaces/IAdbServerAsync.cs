@@ -1,15 +1,16 @@
-﻿// <copyright file="IAdbServer.cs" company="The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere">
+﻿// <copyright file="IAdbServer.\Async.cs" company="The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere">
 // Copyright (c) The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere. All rights reserved.
 // </copyright>
 
 using AdvancedSharpAdbClient.Exceptions;
+using Windows.Foundation;
 
 namespace AdvancedSharpAdbClient.WinRT
 {
     /// <summary>
     /// Represents a common interface for any class that allows starting or stopping the Android Debug Bridge (adb) server/daemon.
     /// </summary>
-    public interface IAdbServer
+    public interface IAdbServerAsync
     {
         /// <summary>
         /// Starts the adb server if it was not previously running.
@@ -25,6 +26,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// running; <see langword="false"/> to keep a previous version of the server running.
         /// </param>
         /// <returns>
+        /// A <see cref="IAsyncOperation{StartServerResult}"/> which return
         /// <list type="ordered">
         /// <item>
         ///   <see cref="StartServerResult.AlreadyRunning"/> if the adb server was already
@@ -46,18 +48,19 @@ namespace AdvancedSharpAdbClient.WinRT
         /// The server was not running, or an outdated version of the server was running,
         /// and the <paramref name="adbPath"/> parameter was not specified.
         /// </exception>
-        StartServerResult StartServer(string adbPath, bool restartServerIfNewer);
+        IAsyncOperation<StartServerResult> StartServerAsync(string adbPath, bool restartServerIfNewer);
 
         /// <summary>
         /// Restarts the adb server if it suddenly became unavailable. Call this class if, for example,
         /// you receive an <see cref="AdbException"/> with the <see cref="AdbException.ConnectionReset"/> flag
         /// set to <see langword="true"/> - a clear indicating the ADB server died.
         /// </summary>
+        /// <returns>A <see cref="IAsyncOperation{StartServerResult}"/> which represents the asynchronous operation.</returns>
         /// <remarks>
         /// You can only call this method if you have previously started the adb server via
         /// <see cref="AdbServer.StartServer(string, bool)"/> and passed the full path to the adb server.
         /// </remarks>
-        StartServerResult RestartServer();
+        IAsyncOperation<StartServerResult> RestartServerAsync();
 
         /// <summary>
         /// Restarts the adb server if it suddenly became unavailable. Call this class if, for example,
@@ -67,18 +70,19 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <param name="adbPath">
         /// The path to the <c>adb.exe</c> executable that can be used to start the adb server.
         /// If this path is not provided, this method will use the path that was cached by
-        /// <see cref="StartServer(string, bool)"/>
+        /// <see cref="StartServerAsync(string, bool)"/>
         /// </param>
+        /// <returns>A <see cref="IAsyncOperation{StartServerResult}"/> which represents the asynchronous operation.</returns>
         /// <remarks>
         /// You can only call this method if you have previously started the adb server via
         /// <see cref="AdbServer.StartServer(string, bool)"/> and passed the full path to the adb server.
         /// </remarks>
-        StartServerResult RestartServer(string adbPath);
+        IAsyncOperation<StartServerResult> RestartServerAsync(string adbPath);
 
         /// <summary>
         /// Gets the status of the adb server.
         /// </summary>
-        /// <returns>A <see cref="AdbServerStatus"/> object that describes the status of the adb server.</returns>
-        AdbServerStatus GetStatus();
+        /// <returns>A <see cref="IAsyncOperation{AdbServerStatus}"/> which return a <see cref="AdbServerStatus"/> object that describes the status of the adb server.</returns>
+        IAsyncOperation<AdbServerStatus> GetStatusAsync();
     }
 }
