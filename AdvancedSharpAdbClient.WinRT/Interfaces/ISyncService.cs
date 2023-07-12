@@ -12,7 +12,7 @@ namespace AdvancedSharpAdbClient.WinRT
     /// <summary>
     /// Interface containing methods for file synchronization.
     /// </summary>
-    public partial interface ISyncService : IDisposable
+    public interface ISyncService : IDisposable
     {
         /// <summary>
         /// Gets a value indicating whether this instance is open.

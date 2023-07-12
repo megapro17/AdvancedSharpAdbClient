@@ -10,7 +10,7 @@ namespace AdvancedSharpAdbClient.WinRT
     /// <summary>
     /// Provides a common interface for any class that allows you to monitor the list of devices that are currently connected to the adb server.
     /// </summary>
-    public partial interface IDeviceMonitor : IDisposable
+    public interface IDeviceMonitor : IDisposable
     {
         /// <summary>
         /// Occurs when the status of one of the connected devices has changed.

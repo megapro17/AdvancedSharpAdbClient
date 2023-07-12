@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
+using Windows.Foundation.Metadata;
 using Windows.Storage.Streams;
 
 namespace AdvancedSharpAdbClient.WinRT
@@ -55,10 +56,7 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         /// <param name="client">A connection to an adb server.</param>
         /// <param name="device">The device on which to interact with the files.</param>
-        public SyncService(AdbClient client, DeviceData device)
-        {
-            syncService = new(client.adbClient, device.deviceData);
-        }
+        public SyncService(AdbClient client, DeviceData device) => syncService = new(client.adbClient, device.deviceData);
 
         /// <summary>
         /// Gets or sets the maximum size of data to transfer between the device and the PC in one block.
@@ -74,6 +72,11 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         public DeviceData Device => DeviceData.GetDeviceData(syncService.Device);
 
+        /// <summary>
+        /// Gets the <see cref="AdbSocket"/> that enables the connection with the adb server.
+        /// </summary>
+        public AdbSocket Socket { get; }
+
         /// <inheritdoc/>
         public bool IsOpen => syncService.IsOpen;
 
@@ -86,14 +89,30 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <summary>
         /// Reopen this connection.
         /// </summary>
-        /// <param name="socket">A <see cref="IAdbSocket"/> that enables to connection with the adb server.</param>
-        //public void Reopen(IAdbSocket socket) => syncService.Reopen(socket);
+        /// <param name="socket">A <see cref="AdbSocket"/> that enables to connection with the adb server.</param>
+        public void Reopen(AdbSocket socket) => syncService.Reopen(socket.adbSocket);
+
+        /// <summary>
+        /// Reopen this connection.
+        /// </summary>
+        /// <param name="socket">A <see cref="AdbSocket"/> that enables to connection with the adb server.</param>
+        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
+        public IAsyncAction ReopenAsync(AdbSocket socket) => AsyncInfo.Run((cancellationToken) => syncService.ReopenAsync(socket.adbSocket, cancellationToken));
 
         /// <summary>
         /// Reopen this connection.
         /// </summary>
         /// <param name="client">A connection to an adb server.</param>
+        [DefaultOverload]
         public void Reopen(AdbClient client) => syncService.Reopen(client.adbClient);
+
+        /// <summary>
+        /// Reopen this connection.
+        /// </summary>
+        /// <param name="client">A connection to an adb server.</param>
+        /// <returns>A <see cref="IAsyncAction"/> which represents the asynchronous operation.</returns>
+        [DefaultOverload]
+        public IAsyncAction ReopenAsync(AdbClient client) => AsyncInfo.Run((cancellationToken) => syncService.ReopenAsync(client.adbClient, cancellationToken));
 
         /// <inheritdoc/>
         public void Push(IInputStream stream, string remotePath, int permissions, DateTimeOffset timestamp, AsyncActionProgressHandler<int> progress) => syncService.Push(stream.AsStreamForRead(), remotePath, permissions, timestamp, progress.GetProgress());
