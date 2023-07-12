@@ -56,7 +56,11 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         /// <param name="client">A connection to an adb server.</param>
         /// <param name="device">The device on which to interact with the files.</param>
-        public SyncService(AdbClient client, DeviceData device) => syncService = new(client.adbClient, device.deviceData);
+        public SyncService(AdbClient client, DeviceData device)
+        {
+            syncService = new(client.adbClient, device.deviceData);
+            syncService.SyncProgressChanged += (sender, args) => SyncProgressChanged?.Invoke(sender, SyncProgressChangedEventArgs.GetSyncProgressChangedEventArgs(args));
+        }
 
         /// <summary>
         /// Gets or sets the maximum size of data to transfer between the device and the PC in one block.

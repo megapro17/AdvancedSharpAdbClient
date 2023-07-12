@@ -425,10 +425,24 @@ namespace AdvancedSharpAdbClient.WinRT
         public IAsyncOperation<AppStatus> GetAppStatusAsync(DeviceData device, string packageName) => AsyncInfo.Run(async (cancellationToken) => (AppStatus)await adbClient.GetAppStatusAsync(device.deviceData, packageName, cancellationToken));
 
         /// <inheritdoc/>
+        public Element FindElement(DeviceData device) => Element.GetElement(adbClient.FindElement(device.deviceData));
+
+        /// <inheritdoc/>
+        public IAsyncOperation<Element> FindElementAsync(DeviceData device) => Task.Run(async () => Element.GetElement(await adbClient.FindElementAsync(device.deviceData))).AsAsyncOperation();
+
+        /// <inheritdoc/>
+        [DefaultOverload]
         public Element FindElement(DeviceData device, string xpath) => Element.GetElement(adbClient.FindElement(device.deviceData, xpath));
 
         /// <inheritdoc/>
+        [DefaultOverload]
         public IAsyncOperation<Element> FindElementAsync(DeviceData device, string xpath) => Task.Run(async () => Element.GetElement(await adbClient.FindElementAsync(device.deviceData, xpath))).AsAsyncOperation();
+
+        /// <inheritdoc/>
+        public Element FindElement(DeviceData device, TimeSpan timeout) => Element.GetElement(adbClient.FindElement(device.deviceData, timeout: timeout));
+
+        /// <inheritdoc/>
+        public IAsyncOperation<Element> FindElementAsync(DeviceData device, TimeSpan timeout) => Task.Run(async () => Element.GetElement(await adbClient.FindElementAsync(device.deviceData, cancellationToken: timeout.GetCancellationToken()))).AsAsyncOperation();
 
         /// <inheritdoc/>
         public Element FindElement(DeviceData device, string xpath, TimeSpan timeout) => Element.GetElement(adbClient.FindElement(device.deviceData, xpath, timeout));
@@ -437,10 +451,24 @@ namespace AdvancedSharpAdbClient.WinRT
         public IAsyncOperation<Element> FindElementAsync(DeviceData device, string xpath, TimeSpan timeout) => Task.Run(async () => Element.GetElement(await adbClient.FindElementAsync(device.deviceData, xpath, timeout.GetCancellationToken()))).AsAsyncOperation();
 
         /// <inheritdoc/>
+        public IEnumerable<Element> FindElements(DeviceData device) => adbClient.FindElements(device.deviceData).Select(Element.GetElement);
+
+        /// <inheritdoc/>
+        public IAsyncOperation<IEnumerable<Element>> FindElementsAsync(DeviceData device) => Task.Run(async () => (await adbClient.FindElementsAsync(device.deviceData)).Select(Element.GetElement)).AsAsyncOperation();
+
+        /// <inheritdoc/>
+        [DefaultOverload]
         public IEnumerable<Element> FindElements(DeviceData device, string xpath) => adbClient.FindElements(device.deviceData, xpath).Select(Element.GetElement);
 
         /// <inheritdoc/>
+        [DefaultOverload]
         public IAsyncOperation<IEnumerable<Element>> FindElementsAsync(DeviceData device, string xpath) => Task.Run(async () => (await adbClient.FindElementsAsync(device.deviceData, xpath)).Select(Element.GetElement)).AsAsyncOperation();
+
+        /// <inheritdoc/>
+        public IEnumerable<Element> FindElements(DeviceData device, TimeSpan timeout) => adbClient.FindElements(device.deviceData, timeout: timeout).Select(Element.GetElement);
+
+        /// <inheritdoc/>
+        public IAsyncOperation<IEnumerable<Element>> FindElementsAsync(DeviceData device, TimeSpan timeout) => Task.Run(async () => (await adbClient.FindElementsAsync(device.deviceData, cancellationToken: timeout.GetCancellationToken())).Select(Element.GetElement)).AsAsyncOperation();
 
         /// <inheritdoc/>
         public IEnumerable<Element> FindElements(DeviceData device, string xpath, TimeSpan timeout) => adbClient.FindElements(device.deviceData, xpath, timeout).Select(Element.GetElement);

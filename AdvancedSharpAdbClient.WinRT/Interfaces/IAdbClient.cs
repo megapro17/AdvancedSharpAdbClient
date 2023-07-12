@@ -516,9 +516,26 @@ namespace AdvancedSharpAdbClient.WinRT
         /// Get element by xpath. You can specify the waiting time in timeout.
         /// </summary>
         /// <param name="device">The device on which to get element.</param>
+        /// <returns>The <see cref="Element"/> of <c>hierarchy/node</c>.</returns>
+        Element FindElement(DeviceData device);
+
+        /// <summary>
+        /// Get element by xpath. You can specify the waiting time in timeout.
+        /// </summary>
+        /// <param name="device">The device on which to get element.</param>
         /// <param name="xpath">The xpath of the element.</param>
         /// <returns>The <see cref="Element"/> of <paramref name="xpath"/>.</returns>
+        [DefaultOverload]
         Element FindElement(DeviceData device, string xpath);
+
+        /// <summary>
+        /// Get element by xpath. You can specify the waiting time in timeout.
+        /// </summary>
+        /// <param name="device">The device on which to get element.</param>
+        /// <param name="timeout">The timeout for waiting the element.
+        /// Only check once if <see langword="default"/> or <see cref="TimeSpan.Zero"/>.</param>
+        /// <returns>The <see cref="Element"/> of <c>hierarchy/node</c>.</returns>
+        Element FindElement(DeviceData device, TimeSpan timeout);
 
         /// <summary>
         /// Get element by xpath. You can specify the waiting time in timeout.
@@ -534,9 +551,26 @@ namespace AdvancedSharpAdbClient.WinRT
         /// Get elements by xpath. You can specify the waiting time in timeout.
         /// </summary>
         /// <param name="device">The device on which to get elements.</param>
+        /// <returns>The <see cref="Array"/> of <see cref="Element"/> has got.</returns>
+        IEnumerable<Element> FindElements(DeviceData device);
+
+        /// <summary>
+        /// Get elements by xpath. You can specify the waiting time in timeout.
+        /// </summary>
+        /// <param name="device">The device on which to get elements.</param>
         /// <param name="xpath">The xpath of the elements.</param>
         /// <returns>The <see cref="Array"/> of <see cref="Element"/> has got.</returns>
+        [DefaultOverload]
         IEnumerable<Element> FindElements(DeviceData device, string xpath);
+
+        /// <summary>
+        /// Get elements by xpath. You can specify the waiting time in timeout.
+        /// </summary>
+        /// <param name="device">The device on which to get elements.</param>
+        /// <param name="timeout">The timeout for waiting the elements.
+        /// Only check once if <see langword="default"/> or <see cref="TimeSpan.Zero"/>.</param>
+        /// <returns>The <see cref="Array"/> of <see cref="Element"/> has got.</returns>
+        IEnumerable<Element> FindElements(DeviceData device, TimeSpan timeout);
 
         /// <summary>
         /// Get elements by xpath. You can specify the waiting time in timeout.

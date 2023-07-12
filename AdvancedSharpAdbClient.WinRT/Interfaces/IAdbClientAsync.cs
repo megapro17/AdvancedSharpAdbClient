@@ -506,9 +506,26 @@ namespace AdvancedSharpAdbClient.WinRT
         /// Get element by xpath asynchronously. You can specify the waiting time in timeout.
         /// </summary>
         /// <param name="device">The device on which to get element.</param>
+        /// <returns>A <see cref="IAsyncOperation{Element}"/> which return the <see cref="Element"/> of <c>hierarchy/node</c>.</returns>
+        IAsyncOperation<Element> FindElementAsync(DeviceData device);
+
+        /// <summary>
+        /// Get element by xpath asynchronously. You can specify the waiting time in timeout.
+        /// </summary>
+        /// <param name="device">The device on which to get element.</param>
         /// <param name="xpath">The xpath of the element.</param>
         /// <returns>A <see cref="IAsyncOperation{Element}"/> which return the <see cref="Element"/> of <paramref name="xpath"/>.</returns>
+        [DefaultOverload]
         IAsyncOperation<Element> FindElementAsync(DeviceData device, string xpath);
+
+        /// <summary>
+        /// Get element by xpath asynchronously. You can specify the waiting time in timeout.
+        /// </summary>
+        /// <param name="device">The device on which to get element.</param>
+        /// <param name="timeout">The timeout for waiting the element.
+        /// Only check once if <see langword="default"/> or <see cref="TimeSpan.Zero"/>.</param>
+        /// <returns>A <see cref="IAsyncOperation{Element}"/> which return the <see cref="Element"/> of <c>hierarchy/node</c>.</returns>
+        IAsyncOperation<Element> FindElementAsync(DeviceData device, TimeSpan timeout);
 
         /// <summary>
         /// Get element by xpath asynchronously. You can specify the waiting time in timeout.
@@ -524,9 +541,26 @@ namespace AdvancedSharpAdbClient.WinRT
         /// Get elements by xpath asynchronously. You can specify the waiting time in timeout.
         /// </summary>
         /// <param name="device">The device on which to get elements.</param>
+        /// <returns>A <see cref="IAsyncOperation{IEnumerable}"/> which return the <see cref="IEnumerable{Element}"/> of <see cref="Element"/> has got.</returns>
+        IAsyncOperation<IEnumerable<Element>> FindElementsAsync(DeviceData device);
+
+        /// <summary>
+        /// Get elements by xpath asynchronously. You can specify the waiting time in timeout.
+        /// </summary>
+        /// <param name="device">The device on which to get elements.</param>
         /// <param name="xpath">The xpath of the elements.</param>
         /// <returns>A <see cref="IAsyncOperation{IEnumerable}"/> which return the <see cref="IEnumerable{Element}"/> of <see cref="Element"/> has got.</returns>
+        [DefaultOverload]
         IAsyncOperation<IEnumerable<Element>> FindElementsAsync(DeviceData device, string xpath);
+
+        /// <summary>
+        /// Get elements by xpath asynchronously. You can specify the waiting time in timeout.
+        /// </summary>
+        /// <param name="device">The device on which to get elements.</param>
+        /// <param name="timeout">The timeout for waiting the element.
+        /// Only check once if <see langword="default"/> or <see cref="TimeSpan.Zero"/>.</param>
+        /// <returns>A <see cref="IAsyncOperation{IEnumerable}"/> which return the <see cref="IEnumerable{Element}"/> of <see cref="Element"/> has got.</returns>
+        IAsyncOperation<IEnumerable<Element>> FindElementsAsync(DeviceData device, TimeSpan timeout);
 
         /// <summary>
         /// Get elements by xpath asynchronously. You can specify the waiting time in timeout.

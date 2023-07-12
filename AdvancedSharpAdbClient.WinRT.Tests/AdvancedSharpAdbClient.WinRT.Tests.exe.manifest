@@ -7,7 +7,19 @@
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
+      name="AdvancedSharpAdbClient.WinRT.AdbCommandLineClient"
+      threadingModel="both"
+      xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
       name="AdvancedSharpAdbClient.WinRT.AdbServer"
+      threadingModel="both"
+      xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+      name="AdvancedSharpAdbClient.WinRT.AdbSocket"
+      threadingModel="both"
+      xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+      name="AdvancedSharpAdbClient.WinRT.CrossPlatformFunc"
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
@@ -15,7 +27,15 @@
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
+      name="AdvancedSharpAdbClient.WinRT.Factories"
+      threadingModel="both"
+      xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
       name="AdvancedSharpAdbClient.WinRT.SyncService"
+      threadingModel="both"
+      xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+      name="AdvancedSharpAdbClient.WinRT.TcpSocket"
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass

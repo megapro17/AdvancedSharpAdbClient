@@ -6,7 +6,11 @@ using AdvancedSharpAdbClient.WinRT.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Xml;
+using System.Xml.Linq;
+using Windows.Data.Xml.Dom;
 using Windows.Foundation;
+using XmlDocument = Windows.Data.Xml.Dom.XmlDocument;
 
 namespace AdvancedSharpAdbClient.WinRT
 {
@@ -27,6 +31,11 @@ namespace AdvancedSharpAdbClient.WinRT
         }
 
         /// <summary>
+        /// Gets the coordinates and size of the element.
+        /// </summary>
+        public Area Area => Area.GetArea(element.Area);
+
+        /// <summary>
         /// Gets the children of this element.
         /// </summary>
         public IEnumerable<Element> Children => element.Children.Select(GetElement);
@@ -35,6 +44,19 @@ namespace AdvancedSharpAdbClient.WinRT
         /// Gets or sets element attributes.
         /// </summary>
         public IDictionary<string, string> Attributes => element.Attributes;
+
+        /// <summary>
+        /// Gets the <see cref="IXmlNode"/> of this element.
+        /// </summary>
+        public IXmlNode Node
+        {
+            get
+            {
+                XmlDocument doc = new();
+                doc.LoadXml(element.Node.OuterXml);
+                return doc.FirstChild;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Element"/> class.
