@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Windows.ApplicationModel;
+using Windows.Foundation;
 
 namespace AdvancedSharpAdbClient.WinRT.Extensions
 {
@@ -37,6 +38,20 @@ namespace AdvancedSharpAdbClient.WinRT.Extensions
                     dictionary.Add(keyValuePair.Key, keyValuePair.Value);
                 }
                 return dictionary;
+            }
+        }
+
+        public static Progress<T> GetProgress<T>(this AsyncActionProgressHandler<T> handler)
+        {
+            if (handler != null)
+            {
+                Progress<T> progress = new();
+                progress.ProgressChanged += (sender, e) => handler?.Invoke(null, e);
+                return progress;
+            }
+            else
+            {
+                return null;
             }
         }
 

@@ -55,6 +55,6 @@ namespace AdvancedSharpAdbClient.WinRT.DeviceCommands
 
         internal InstallProgressEventArgs(AdvancedSharpAdbClient.DeviceCommands.InstallProgressEventArgs installProgressEventArgs) => this.installProgressEventArgs = installProgressEventArgs;
 
-        internal static InstallProgressEventArgs GetInstallProgressEventArgs(AdvancedSharpAdbClient.DeviceCommands.InstallProgressEventArgs element) => new(element);
+        internal static InstallProgressEventArgs GetInstallProgressEventArgs(AdvancedSharpAdbClient.DeviceCommands.InstallProgressEventArgs installProgressEventArgs) => new(installProgressEventArgs);
     }
 }
