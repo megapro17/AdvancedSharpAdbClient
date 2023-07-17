@@ -13,18 +13,18 @@ int main()
     auto adbServer = AdbServer::AdbServer();
     adbServer.StartServer(L"C:\\Program Files (x86)\\Android\\android-sdk\\platform-tools\\adb.exe", true);
     auto status = adbServer.GetStatus();
-    printf("%ls\n", status.ToString().c_str());
+    printf("%ls\n", status.as<IStringable>().ToString().c_str());
     if (status.IsRunning())
     {
         auto adbClient = AdbClient::AdbClient();
         auto devices = adbClient.GetDevices();
         for (auto device : devices)
         {
-            printf("%ls\n", device.ToString().c_str());
+            printf("%ls\n", device.as<IStringable>().ToString().c_str());
             auto processes = adbClient.ListProcesses(device);
             for (auto process : processes)
             {
-                printf("%ls\n", process.ToString().c_str());
+                printf("%ls\n", process.as<IStringable>().ToString().c_str());
             }
         }
         adbClient.KillAdb();

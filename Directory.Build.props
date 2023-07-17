@@ -3,29 +3,34 @@
   <PropertyGroup>
     <AssemblyTitle>.NET client for adb, the Android Debug Bridge (AdvancedSharpAdbClient)</AssemblyTitle>
     <Authors>The Android Open Source Project, Ryan Conrad, Quamotion and improved by yungd1plomat, wherewhere</Authors>
+    <ContinuousIntegrationBuild>True</ContinuousIntegrationBuild>
     <Copyright>https://github.com/quamotion/madb</Copyright>
-    <Description>AdvancedSharpAdbClient is a .NET library that allows .NET and .NET Core applications to communicate with Android devices. It's a improved version of SharpAdbClient.</Description>
+    <Description>AdvancedSharpAdbClient.WinRT is a WinRT library that allows WinRT applications to communicate with Android devices. It's a WinRT package of AdvancedSharpAdbClient, which is upgraded version of SharpAdbClient.</Description>
+    <Deterministic>True</Deterministic>
+    <EmbedUntrackedSources>True</EmbedUntrackedSources>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <IncludeSymbols>True</IncludeSymbols>
     <LangVersion>latest</LangVersion>
+    <PackageIcon>Icon.png</PackageIcon>
+    <PackageIconUrl>https://raw.githubusercontent.com/yungd1plomat/AdvancedSharpAdbClient/main/logo.png</PackageIconUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/yungd1plomat/AdvancedSharpAdbClient</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageTags>android;adb;SharpAdbClient;AdvancedSharpAdbClient</PackageTags>
+    <PackageReleaseNotes>https://github.com/yungd1plomat/AdvancedSharpAdbClient/releases</PackageReleaseNotes>
+    <PackageTags>Android;ADB;Communicate;UWP;Xamarin;MAUI;WinUI;Mono;Unity;SharpAdbClient;AdvancedSharpAdbClient</PackageTags>
     <RepositoryType>git</RepositoryType>
     <Product>AdvancedSharpAdbClient: A .NET client for the Android Debug Bridge (adb)</Product>
     <PublishRepositoryUrl>True</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/yungd1plomat/AdvancedSharpAdbClient</RepositoryUrl>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Title>.NET client for adb, Android Debug Bridge (AdvancedSharpAdbClient)</Title>
-    <VersionPrefix>2.5.4</VersionPrefix>
+    <VersionPrefix>0.0.1</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <UseWinRT Condition="'$(IsWindows)' == ''">False</UseWinRT>
-    <FullTargets Condition="'$(FullTargets)' == ''">True</FullTargets>
+    <FullTargets Condition="'$(FullTargets)' == ''">False</FullTargets>
+    <ImportAsync Condition="'$(ImportAsync)' == ''">False</ImportAsync>
     <IsWindows Condition="'$(IsWindows)' == ''">False</IsWindows>
-    <IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows')) == 'true' OR '$(Platform)' == 'Windows NT'">True</IsWindows>
+    <IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows')) == 'True' OR '$(Platform)' == 'Windows NT'">True</IsWindows>
+    <IsTestProject Condition="'$(IsTestProject)' == ''">$(MSBuildProjectName.Contains('.Test'))</IsTestProject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcore50'">
