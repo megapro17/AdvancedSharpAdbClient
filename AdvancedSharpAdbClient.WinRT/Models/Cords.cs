@@ -58,7 +58,6 @@ namespace AdvancedSharpAdbClient.WinRT
             set => cords.Y = value;
         }
 
-#pragma warning disable CS0419 // cref 特性中有不明确的引用
         /// <summary>
         /// Translates a <see cref='Cords'/> by a given <see cref='Size'/>.
         /// </summary>
@@ -95,7 +94,6 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <param name="_value">The <see cref='Point'/> to convert.</param>
         /// <returns>The <see cref='Cords'/> this method converts to.</returns>
         public static Cords Round(Point _value) => GetCords(AdvancedSharpAdbClient.Cords.Round(_value));
-#pragma warning restore CS0419 // cref 特性中有不明确的引用
 
         /// <summary>
         /// Specifies whether this <see cref='Cords'/> contains the same coordinates as the specified

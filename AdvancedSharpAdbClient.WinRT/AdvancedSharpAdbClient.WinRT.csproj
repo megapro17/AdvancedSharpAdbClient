@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <FullTargets>True</FullTargets>
-    <OutputPathRoot Condition="'$(Platform)' == 'AnyCPU'">bin\$(Configuration)\</OutputPathRoot>
-    <OutputPathRoot Condition="'$(Platform)' != 'AnyCPU'">bin\$(Platform)\$(Configuration)\</OutputPathRoot>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(FullTargets)' == 'true'">
     <NoWarn>NU1603;NU5100</NoWarn>
+    <OutputPathRoot Condition="'$(Platform)' == 'AnyCPU'">bin\$(Configuration)\</OutputPathRoot>
+    <OutputPathRoot Condition="'$(Platform)' != 'AnyCPU'">bin\$(Platform)\$(Configuration)\</OutputPathRoot>
     <TargetFrameworks>uap10.0;net6.0-windows10.0.17763.0</TargetFrameworks>
   </PropertyGroup>
 
@@ -15,17 +15,19 @@
     <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0'">
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <DebugType>Full</DebugType>
+    <NoWarn>CS0419</NoWarn>
+    <OutputType>winmdobj</OutputType>
+    <Platforms>AnyCPU;x64;x86;ARM64;ARM</Platforms>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows10.0.17763.0'">
     <CsWinRTComponent>true</CsWinRTComponent>
     <CsWinRTWindowsMetadata>10.0.22621.0</CsWinRTWindowsMetadata>
+    <NoWarn>CS1591</NoWarn>
     <Platforms>x64;x86;ARM64;ARM</Platforms>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' != 'net6.0-windows10.0.17763.0'">
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <DebugType>Full</DebugType>
-    <OutputType>winmdobj</OutputType>
-    <Platforms>AnyCPU;x64;x86;ARM64;ARM</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

@@ -29,7 +29,6 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <param name="height">The height of the area.</param>
         public Area(int x, int y, int width, int height) => area = new(x, y, width, height);
 
-#pragma warning disable CS0419 // cref 特性中有不明确的引用
         /// <summary>
         /// Initializes a new instance of the <see cref='Area'/> class with the specified rectangle.
         /// </summary>
@@ -42,7 +41,6 @@ namespace AdvancedSharpAdbClient.WinRT
         /// <param name="location">A <see cref="Cords"/> that represents the upper-left corner of the rectangular region.</param>
         /// <param name="size">A <see cref="Size"/> that represents the width and height of the rectangular region.</param>
         public Area(Cords location, Size size) => area = new(location.cords, size);
-#pragma warning restore CS0419 // cref 特性中有不明确的引用
 
         internal Area(AdvancedSharpAdbClient.Area area) => this.area = area;
 
@@ -169,7 +167,6 @@ namespace AdvancedSharpAdbClient.WinRT
         [DefaultOverload]
         public bool Equals(Area other) => area.Equals(other);
 
-#pragma warning disable CS0419 // cref 特性中有不明确的引用
         /// <summary>
         /// Converts a <see cref="Rect"/> to a <see cref="Area"/> by performing a ceiling operation on all the coordinates.
         /// </summary>
@@ -187,7 +184,6 @@ namespace AdvancedSharpAdbClient.WinRT
         /// </summary>
         /// <param name="_value">The <see cref="Rect"/> structure to be converted.</param>
         public static Area Round(Rect _value) => GetArea(AdvancedSharpAdbClient.Area.Round(_value));
-#pragma warning restore CS0419 // cref 特性中有不明确的引用
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined by this
