@@ -6,8 +6,6 @@ using AdvancedSharpAdbClient.WinRT.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Xml;
-using System.Xml.Linq;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using XmlDocument = Windows.Data.Xml.Dom.XmlDocument;

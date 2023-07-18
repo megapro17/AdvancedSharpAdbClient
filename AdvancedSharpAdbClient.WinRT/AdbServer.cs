@@ -1,6 +1,5 @@
 ﻿using AdvancedSharpAdbClient.WinRT.Extensions;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
 using Windows.ApplicationModel;
 using Windows.Foundation;
 

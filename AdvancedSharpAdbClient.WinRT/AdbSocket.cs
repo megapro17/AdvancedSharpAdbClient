@@ -126,7 +126,7 @@ namespace AdvancedSharpAdbClient.WinRT
 
         /// <inheritdoc/>
         public IAsyncAction SendAdbRequestAsync(string request) => AsyncInfo.Run((cancellationToken) => adbSocket.SendAdbRequestAsync(request, cancellationToken));
-        
+
         /// <inheritdoc/>
         public int Read([WriteOnlyArray] byte[] data) => adbSocket.Read(data);
 

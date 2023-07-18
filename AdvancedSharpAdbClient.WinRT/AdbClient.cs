@@ -55,6 +55,12 @@ namespace AdvancedSharpAdbClient.WinRT
         public static int DefaultAdbServerPort { get; } = AdvancedSharpAdbClient.AdbClient.DefaultAdbServerPort;
 
         /// <summary>
+        /// Gets a new instance of the <see cref="AdbClient"/> class.
+        /// </summary>
+        [Deprecated("This function has been removed since SharpAdbClient. Here is a placeholder which function is gets a new instance instead of gets or sets the default instance.", DeprecationType.Deprecate, 65536)]
+        public static AdbClient Instance => new();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AdbClient"/> class.
         /// </summary>
         public AdbClient() => adbClient = new();
