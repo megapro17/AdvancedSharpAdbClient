@@ -27,30 +27,13 @@
 
   <PropertyGroup>
     <FullTargets Condition="'$(FullTargets)' == ''">False</FullTargets>
-    <ImportAsync Condition="'$(ImportAsync)' == ''">False</ImportAsync>
     <IsWindows Condition="'$(IsWindows)' == ''">False</IsWindows>
+    <CsWinRTVersion Condition="'$(CsWinRTVersion)' == ''">2.0.3</CsWinRTVersion>
     <IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows')) == 'True' OR '$(Platform)' == 'Windows NT'">True</IsWindows>
     <IsTestProject Condition="'$(IsTestProject)' == ''">$(MSBuildProjectName.Contains('.Test'))</IsTestProject>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netcore50'">
-    <NugetTargetMoniker>.NETCore,Version=v5.0</NugetTargetMoniker>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <SuppressTfmSupportBuildWarnings>True</SuppressTfmSupportBuildWarnings>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0'">
-    <TargetPlatformMinVersion>10.0</TargetPlatformMinVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0.15138.0'">
-    <TargetPlatformMinVersion>10.0.15138.0</TargetPlatformMinVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0'
-                         or '$(TargetFramework)' == 'uap10.0.15138.0'">
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <DefaultLanguage>en-US</DefaultLanguage>
     <DefineConstants>$(DefineConstants);WINDOWS_UWP</DefineConstants>
@@ -59,6 +42,7 @@
     <TargetFrameworkIdentifier>.NETCore</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformMinVersion>10.0</TargetPlatformMinVersion>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
   </PropertyGroup>
 

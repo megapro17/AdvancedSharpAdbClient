@@ -2,11 +2,13 @@
 
   <PropertyGroup>
     <FullTargets>True</FullTargets>
+    <OutputPathRoot Condition="'$(Platform)' == 'AnyCPU'">bin\$(Configuration)\</OutputPathRoot>
+    <OutputPathRoot Condition="'$(Platform)' != 'AnyCPU'">bin\$(Platform)\$(Configuration)\</OutputPathRoot>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(FullTargets)' == 'true'">
-    <NoWarn>NU1603</NoWarn>
-    <TargetFrameworks>uap10.0;uap10.0.15138.0;net6.0-windows10.0.17763.0</TargetFrameworks>
+    <NoWarn>NU1603;NU5100</NoWarn>
+    <TargetFrameworks>uap10.0;net6.0-windows10.0.17763.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(FullTargets)' != 'true'">
@@ -30,60 +32,64 @@
 	<PackageReference Include="AdvancedSharpAdbClient" Version="2.5.7" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(FullTargets)' == 'true'">
+  <ItemGroup>
     <None Include="..\logo.png" Pack="true" PackagePath="\Icon.png">
       <Link>Assets\Icon.png</Link>
     </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(FullTargets)' == 'true'">
     <None Include="..\build\*" Pack="true" PackagePath="build\">
       <Link>Assets\build\%(FileName)%(Extension)</Link>
     </None>
-    <None Include="bin\$(Configuration)\net6.0-windows10.0.17763.0\*" Pack="true" PackagePath="build\native\">
+    <None Include="$(OutputPathRoot)net6.0-windows10.0.17763.0\*" Pack="true" PackagePath="build\native\">
       <Link>Assets\build\native\%(FileName)%(Extension)</Link>
     </None>
-    <None Remove="bin\$(Configuration)\net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.deps.json" />
-    <None Remove="bin\$(Configuration)\net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.dll" />
-    <None Remove="bin\$(Configuration)\net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.pdb" />
-    <None Remove="bin\$(Configuration)\net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.winmd" />
-    <None Remove="bin\$(Configuration)\net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.xml" />
-    <None Remove="bin\$(Configuration)\net6.0-windows10.0.17763.0\WinRT.Host.dll" />
-    <None Remove="bin\$(Configuration)\net6.0-windows10.0.17763.0\WinRT.Host.dll.mui" />
-    <None Remove="bin\$(Configuration)\net6.0-windows10.0.17763.0\WinRT.Host.Shim.dll" />
-    <None Include="bin\$(Configuration)\uap10.0\*" Pack="true" PackagePath="build\uap10.0\">
-      <Link>Assets\build\uap10.0\%(FileName)%(Extension)</Link>
+    <None Remove="$(OutputPathRoot)net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.deps.json" />
+    <None Remove="$(OutputPathRoot)net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.dll" />
+    <None Remove="$(OutputPathRoot)net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.pdb" />
+    <None Remove="$(OutputPathRoot)net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.winmd" />
+    <None Remove="$(OutputPathRoot)net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.xml" />
+    <None Remove="$(OutputPathRoot)net6.0-windows10.0.17763.0\WinRT.Host.dll" />
+    <None Remove="$(OutputPathRoot)net6.0-windows10.0.17763.0\WinRT.Host.dll.mui" />
+    <None Remove="$(OutputPathRoot)net6.0-windows10.0.17763.0\WinRT.Host.Shim.dll" />
+    <None Include="$(OutputPathRoot)uap10.0\AdvancedSharpAdbClient.dll" Pack="true" PackagePath="build\uap10.0\AdvancedSharpAdbClient.dll">
+      <Link>Assets\build\uap10.0\AdvancedSharpAdbClient.dll</Link>
     </None>
-    <None Remove="bin\$(Configuration)\uap10.0\AdvancedSharpAdbClient.WinRT.pdb" />
-    <None Remove="bin\$(Configuration)\uap10.0\AdvancedSharpAdbClient.WinRT.pri" />
-    <None Remove="bin\$(Configuration)\uap10.0\AdvancedSharpAdbClient.WinRT.winmd" />
-    <None Remove="bin\$(Configuration)\uap10.0\AdvancedSharpAdbClient.WinRT.xml" />
-    <None Include="bin\$(Configuration)\uap10.0.15138.0\*" Pack="true" PackagePath="build\uap10.0.15138\">
-      <Link>Assets\build\uap10.0.15138\%(FileName)%(Extension)</Link>
+    <None Include="$(OutputPathRoot)uap10.0\Microsoft.Extensions.Logging.Abstractions.dll" Pack="true" PackagePath="build\uap10.0\Microsoft.Extensions.Logging.Abstractions.dll">
+      <Link>Assets\build\uap10.0\Microsoft.Extensions.Logging.Abstractions.dll</Link>
     </None>
-    <None Remove="bin\$(Configuration)\uap10.0.15138.0\AdvancedSharpAdbClient.WinRT.pdb" />
-    <None Remove="bin\$(Configuration)\uap10.0.15138.0\AdvancedSharpAdbClient.WinRT.pri" />
-    <None Remove="bin\$(Configuration)\uap10.0.15138.0\AdvancedSharpAdbClient.WinRT.winmd" />
-    <None Remove="bin\$(Configuration)\uap10.0.15138.0\AdvancedSharpAdbClient.WinRT.xml" />
+    <None Include="$(OutputPathRoot)uap10.0\System.Runtime.InteropServices.RuntimeInformation.dll" Pack="true" PackagePath="build\uap10.0\System.Runtime.InteropServices.RuntimeInformation.dll">
+      <Link>Assets\build\uap10.0\System.Runtime.InteropServices.RuntimeInformation.dll</Link>
+    </None>
+    <None Include="$(OutputPathRoot)uap10.0\System.Xml.XPath.dll" Pack="true" PackagePath="build\uap10.0\System.Xml.XPath.dll">
+      <Link>Assets\build\uap10.0\System.Xml.XPath.dll</Link>
+    </None>
+    <None Include="$(OutputPathRoot)uap10.0\System.Xml.XPath.XmlDocument.dll" Pack="true" PackagePath="build\uap10.0\System.Xml.XPath.XmlDocument.dll">
+      <Link>Assets\build\uap10.0\System.Xml.XPath.XmlDocument.dll</Link>
+    </None>
     <None Include="..\build\*" Pack="true" PackagePath="buildTransitive\">
       <Link>Assets\buildTransitive\%(FileName)%(Extension)</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.windows.cswinrt\2.0.3\hosting\**\native\*" Pack="true" PackagePath="hosting\">
+    <None Include="$(NuGetPackageRoot)microsoft.windows.cswinrt\$(CsWinRTVersion)\hosting\**\native\*" Pack="true" PackagePath="hosting\">
       <Link>Assets\hosting\%(RecursiveDir)\%(FileName)%(Extension)</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.windows.cswinrt\2.0.3\hosting\**\native\en-US\*" Pack="true" PackagePath="hosting\">
+    <None Include="$(NuGetPackageRoot)microsoft.windows.cswinrt\$(CsWinRTVersion)\hosting\**\native\en-US\*" Pack="true" PackagePath="hosting\">
       <Link>Assets\hosting\%(RecursiveDir)\%(FileName)%(Extension)</Link>
     </None>
-    <None Include="bin\$(Configuration)\net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.winmd" Pack="true" PackagePath="lib\net6.0-windows10.0.17763.0\winmd\">
+    <None Include="$(OutputPathRoot)net6.0-windows10.0.17763.0\AdvancedSharpAdbClient.WinRT.winmd" Pack="true" PackagePath="lib\net6.0-windows10.0.17763.0\winmd\">
       <Link>Assets\lib\net6.0-windows10.0.17763.0\winmd\AdvancedSharpAdbClient.WinRT.winmd</Link>
     </None>
-    <None Include="bin\$(Configuration)\net6.0-windows10.0.17763.0\WinRT.Host.Shim.dll" Pack="true" PackagePath="lib\net6.0-windows10.0.17763.0\">
+    <None Include="$(OutputPathRoot)net6.0-windows10.0.17763.0\WinRT.Host.Shim.dll" Pack="true" PackagePath="lib\net6.0-windows10.0.17763.0\">
       <Link>Assets\lib\net6.0-windows10.0.17763.0\winmd\WinRT.Host.Shim.winmd</Link>
     </None>
-    <None Include="bin\$(Configuration)\net6.0-windows10.0.17763.0\WinRT.Runtime.dll" Pack="true" PackagePath="lib\net6.0-windows10.0.17763.0\">
+    <None Include="$(OutputPathRoot)net6.0-windows10.0.17763.0\WinRT.Runtime.dll" Pack="true" PackagePath="lib\net6.0-windows10.0.17763.0\">
       <Link>Assets\lib\net6.0-windows10.0.17763.0\winmd\WinRT.Runtime.winmd</Link>
     </None>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows10.0.17763.0'">
-	<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.3" />
+	<PackageReference Include="Microsoft.Windows.CsWinRT" Version="$(CsWinRTVersion)" />
   </ItemGroup>
 
 </Project>
