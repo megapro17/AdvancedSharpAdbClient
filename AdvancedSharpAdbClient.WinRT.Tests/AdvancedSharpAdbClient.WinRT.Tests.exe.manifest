@@ -15,6 +15,10 @@
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
+      name="AdvancedSharpAdbClient.WinRT.AdbServerFeatures"
+      threadingModel="both"
+      xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
       name="AdvancedSharpAdbClient.WinRT.AdbSocket"
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
@@ -23,11 +27,19 @@
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
+      name="AdvancedSharpAdbClient.WinRT.DateTimeHelper"
+      threadingModel="both"
+      xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
       name="AdvancedSharpAdbClient.WinRT.DeviceMonitor"
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
       name="AdvancedSharpAdbClient.WinRT.Factories"
+      threadingModel="both"
+      xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+      name="AdvancedSharpAdbClient.WinRT.SyncCommandConverter"
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
@@ -44,6 +56,10 @@
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
     <activatableClass
       name="AdvancedSharpAdbClient.WinRT.DeviceCommands.PackageManager"
+      threadingModel="both"
+      xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+      name="AdvancedSharpAdbClient.WinRT.Logs.LogReader"
       threadingModel="both"
       xmlns="urn:schemas-microsoft-com:winrt.v1" />
   </file>

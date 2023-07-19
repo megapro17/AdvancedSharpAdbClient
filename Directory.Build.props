@@ -11,16 +11,16 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
     <PackageIcon>Icon.png</PackageIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/yungd1plomat/AdvancedSharpAdbClient/main/logo.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/yungd1plomat/AdvancedSharpAdbClient/winrt/logo.png</PackageIconUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/yungd1plomat/AdvancedSharpAdbClient</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/yungd1plomat/AdvancedSharpAdbClient/tree/winrt</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>https://github.com/yungd1plomat/AdvancedSharpAdbClient/releases</PackageReleaseNotes>
-    <PackageTags>Android;ADB;Communicate;UWP;Xamarin;MAUI;WinUI;Mono;Unity;SharpAdbClient;AdvancedSharpAdbClient</PackageTags>
+    <PackageTags>Android;ADB;Communicate;WinRT;CPP;UWP;WinUI;COM;SharpAdbClient;AdvancedSharpAdbClient</PackageTags>
     <RepositoryType>git</RepositoryType>
     <Product>AdvancedSharpAdbClient: A .NET client for the Android Debug Bridge (adb)</Product>
     <PublishRepositoryUrl>True</PublishRepositoryUrl>
-    <RepositoryUrl>https://github.com/yungd1plomat/AdvancedSharpAdbClient</RepositoryUrl>
+    <RepositoryUrl>https://github.com/yungd1plomat/AdvancedSharpAdbClient/tree/winrt</RepositoryUrl>
     <Title>.NET client for adb, Android Debug Bridge (AdvancedSharpAdbClient)</Title>
     <VersionPrefix>0.0.1</VersionPrefix>
   </PropertyGroup>
