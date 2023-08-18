@@ -15,7 +15,7 @@ namespace AdvancedSharpAdbClient
         /// <summary>
         /// The mask that can be used to retrieve the file type from a <see cref="UnixFileMode"/>.
         /// </summary>
-        TypeMask = 0x8000,
+        TypeMask = 0xF000,
 
         /// <summary>
         /// The file is a Unix socket.
