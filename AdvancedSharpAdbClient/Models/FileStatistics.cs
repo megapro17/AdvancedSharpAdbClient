@@ -24,7 +24,7 @@ namespace AdvancedSharpAdbClient
         /// <summary>
         /// Gets or sets the total file size, in bytes.
         /// </summary>
-        public int Size { get; set; }
+        public uint Size { get; set; }
 
         /// <summary>
         /// Gets or sets the time of last modification.
