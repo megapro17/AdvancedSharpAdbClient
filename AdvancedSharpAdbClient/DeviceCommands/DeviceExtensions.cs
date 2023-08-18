@@ -51,7 +51,10 @@ namespace AdvancedSharpAdbClient.DeviceCommands
         public static IEnumerable<FileStatistics> List(this IAdbClient client, DeviceData device, string remotePath)
         {
             using ISyncService service = Factories.SyncServiceFactory(client, device);
-            return service.GetDirectoryListing(remotePath);
+            foreach (var fileStat in service.GetDirectoryListing(remotePath))
+            {
+                yield return fileStat;
+            }
         }
 
 #if !HAS_TASK
